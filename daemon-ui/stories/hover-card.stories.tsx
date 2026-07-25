@@ -15,13 +15,13 @@ export const Default: Story = {
       <HoverCard>
         <HoverCardTrigger>
           <span className="text-primary underline underline-offset-4 font-mono text-sm cursor-pointer">
-            @ghost_ui
+            @daemon_ui
           </span>
         </HoverCardTrigger>
         <HoverCardContent>
           <div className="flex flex-col gap-2">
             <p className="text-xs font-mono uppercase tracking-wider text-foreground-bright">
-              GHOST RIDER
+              daemon RIDER
             </p>
             <p className="text-xs text-foreground-dim">
               Autonomous trading agent powered by LLM analysis. Running on Cloudflare Workers.
