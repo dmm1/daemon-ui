@@ -4,7 +4,6 @@ import {
   useCallback,
   useContext,
   useEffect,
-  useLayoutEffect,
   useRef,
   useState,
   type HTMLAttributes,
@@ -14,6 +13,8 @@ import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'motion/react'
 import { cn } from '../lib/cn'
 import { Keys } from '../lib/utils'
+import { usePopperPosition } from '../primitives/popper'
+import { useDismissableLayer } from '../primitives/dismissable'
 
 interface MenubarContextValue {
   activeMenu: string | null
@@ -172,39 +173,26 @@ const MenubarContent = forwardRef<HTMLDivElement, MenubarContentProps>(
     const { setActiveMenu } = useMenubar()
     const { open, triggerRef } = useMenubarMenu()
     const contentRef = useRef<HTMLDivElement>(null)
-    const [coords, setCoords] = useState({ top: 0, left: 0 })
     const activeIndex = useRef(-1)
 
-    useLayoutEffect(() => {
-      if (!open || !triggerRef.current) return
-      const rect = triggerRef.current.getBoundingClientRect()
-      setCoords({
-        top: rect.bottom + window.scrollY + 4,
-        left: rect.left + window.scrollX,
-      })
-    }, [open, triggerRef])
+    const { coords, transform } = usePopperPosition(triggerRef, {
+      placement: 'bottom',
+      align: 'start',
+      offset: 4,
+      open,
+    })
+
+    useDismissableLayer(contentRef, {
+      enabled: open,
+      onDismiss: () => setActiveMenu(null),
+      onEscape: () => triggerRef.current?.focus(),
+      ignoreRef: triggerRef,
+    })
 
     useEffect(() => {
       if (!open) return
 
-      function handleClickOutside(e: MouseEvent) {
-        const target = e.target as Node
-        if (
-          contentRef.current &&
-          !contentRef.current.contains(target) &&
-          !triggerRef.current?.contains(target)
-        ) {
-          setActiveMenu(null)
-        }
-      }
-
       function handleKeyDown(e: KeyboardEvent) {
-        if (e.key === Keys.Escape) {
-          setActiveMenu(null)
-          triggerRef.current?.focus()
-          return
-        }
-
         const items = contentRef.current?.querySelectorAll<HTMLElement>('[role="menuitem"]:not([data-disabled])')
         if (!items?.length) return
 
@@ -219,13 +207,9 @@ const MenubarContent = forwardRef<HTMLDivElement, MenubarContentProps>(
         }
       }
 
-      document.addEventListener('mousedown', handleClickOutside)
       document.addEventListener('keydown', handleKeyDown)
-      return () => {
-        document.removeEventListener('mousedown', handleClickOutside)
-        document.removeEventListener('keydown', handleKeyDown)
-      }
-    }, [open, setActiveMenu, triggerRef])
+      return () => document.removeEventListener('keydown', handleKeyDown)
+    }, [open])
 
     useEffect(() => {
       if (open) activeIndex.current = -1
@@ -249,6 +233,7 @@ const MenubarContent = forwardRef<HTMLDivElement, MenubarContentProps>(
               position: 'absolute',
               top: coords.top,
               left: coords.left,
+              transform,
               transformOrigin: 'top left',
               zIndex: 50,
             }}

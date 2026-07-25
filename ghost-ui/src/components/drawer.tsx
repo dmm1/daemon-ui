@@ -9,7 +9,7 @@ import {
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence, type PanInfo } from 'motion/react'
 import { cn } from '../lib/cn'
-import { Keys } from '../lib/utils'
+import { FocusTrap } from '../primitives/focus-trap'
 
 interface DrawerContextValue {
   open: boolean
@@ -69,16 +69,10 @@ export function DrawerContent({ children, className }: DrawerContentProps) {
     if (!open) return
     const prev = document.body.style.overflow
     document.body.style.overflow = 'hidden'
-
-    function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === Keys.Escape) setOpen(false)
-    }
-    document.addEventListener('keydown', handleKeyDown)
     return () => {
       document.body.style.overflow = prev
-      document.removeEventListener('keydown', handleKeyDown)
     }
-  }, [open, setOpen])
+  }, [open])
 
   const handleDragEnd = useCallback(
     (_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
@@ -101,25 +95,27 @@ export function DrawerContent({ children, className }: DrawerContentProps) {
             className="fixed inset-0 z-50 bg-black/50"
             onClick={() => setOpen(false)}
           />
-          <motion.div
-            role="dialog"
-            aria-modal="true"
-            initial={{ y: '100%' }}
-            animate={{ y: 0 }}
-            exit={{ y: '100%' }}
-            transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-            drag="y"
-            dragConstraints={{ top: 0 }}
-            dragElastic={0.2}
-            onDragEnd={handleDragEnd}
-            className={cn(
-              'fixed inset-x-0 bottom-0 z-50 bg-background-panel border-t border-border rounded-t-lg max-h-[85vh] font-mono shadow-lg',
-              className
-            )}
-          >
-            <div className="w-12 h-1 bg-foreground-dim/30 rounded-full mx-auto mt-3 mb-2" />
-            {children}
-          </motion.div>
+          <FocusTrap onEscape={() => setOpen(false)}>
+            <motion.div
+              role="dialog"
+              aria-modal="true"
+              initial={{ y: '100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '100%' }}
+              transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+              drag="y"
+              dragConstraints={{ top: 0 }}
+              dragElastic={0.2}
+              onDragEnd={handleDragEnd}
+              className={cn(
+                'fixed inset-x-0 bottom-0 z-50 bg-background-panel border-t border-border rounded-t-lg max-h-[85vh] font-mono shadow-lg',
+                className
+              )}
+            >
+              <div className="w-12 h-1 bg-foreground-dim/30 rounded-full mx-auto mt-3 mb-2" />
+              {children}
+            </motion.div>
+          </FocusTrap>
         </>
       )}
     </AnimatePresence>,

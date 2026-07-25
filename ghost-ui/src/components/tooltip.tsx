@@ -9,50 +9,7 @@ import {
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'motion/react'
 import { cn } from '../lib/cn'
-
-type Placement = 'top' | 'bottom' | 'left' | 'right'
-
-interface Coords {
-  top: number
-  left: number
-}
-
-const placementTransforms: Record<Placement, string> = {
-  top: 'translate(-50%, -100%)',
-  bottom: 'translate(-50%, 0)',
-  left: 'translate(-100%, -50%)',
-  right: 'translate(0, -50%)',
-}
-
-function calculatePosition(
-  reference: Element,
-  placement: Placement,
-  offset: number
-): Coords {
-  const rect = reference.getBoundingClientRect()
-  switch (placement) {
-    case 'top':
-      return {
-        top: rect.top + window.scrollY - offset,
-        left: rect.left + window.scrollX + rect.width / 2,
-      }
-    case 'bottom':
-      return {
-        top: rect.bottom + window.scrollY + offset,
-        left: rect.left + window.scrollX + rect.width / 2,
-      }
-    case 'left':
-      return {
-        top: rect.top + window.scrollY + rect.height / 2,
-        left: rect.left + window.scrollX - offset,
-      }
-    case 'right':
-      return {
-        top: rect.top + window.scrollY + rect.height / 2,
-        left: rect.right + window.scrollX + offset,
-      }
-  }
-}
+import { usePopperPosition, type Placement } from '../primitives/popper'
 
 export function useTooltip({
   placement = 'top' as Placement,
@@ -60,21 +17,14 @@ export function useTooltip({
   delay = 200,
 } = {}) {
   const [open, setOpen] = useState(false)
-  const [coords, setCoords] = useState<Coords>({ top: 0, left: 0 })
   const triggerRef = useRef<HTMLElement>(null)
   const timeoutRef = useRef<ReturnType<typeof setTimeout>>(null)
 
-  const updatePosition = useCallback(() => {
-    if (!triggerRef.current) return
-    setCoords(calculatePosition(triggerRef.current, placement, offset))
-  }, [placement, offset])
-
   const show = useCallback(() => {
     timeoutRef.current = setTimeout(() => {
-      updatePosition()
       setOpen(true)
     }, delay)
-  }, [delay, updatePosition])
+  }, [delay])
 
   const hide = useCallback(() => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current)
@@ -83,29 +33,33 @@ export function useTooltip({
 
   return {
     open,
-    coords,
     triggerRef: triggerRef as RefObject<HTMLElement>,
     show,
     hide,
     placement,
+    offset,
   }
 }
 
 interface TooltipPortalProps {
   open: boolean
-  coords: Coords
+  triggerRef: RefObject<Element | null>
   placement: Placement
+  offset?: number
   children: ReactNode
   className?: string
 }
 
 export function TooltipPortal({
   open,
-  coords,
+  triggerRef,
   placement,
+  offset = 8,
   children,
   className,
 }: TooltipPortalProps) {
+  const { coords, transform } = usePopperPosition(triggerRef, { placement, offset, open })
+
   return createPortal(
     <AnimatePresence>
       {open && (
@@ -118,7 +72,7 @@ export function TooltipPortal({
             position: 'absolute',
             top: coords.top,
             left: coords.left,
-            transform: placementTransforms[placement],
+            transform,
             zIndex: 9999,
           }}
           className={cn(
@@ -163,9 +117,9 @@ export function TooltipContent({ title, description, items }: TooltipContentProp
 
 interface TooltipContextValue {
   open: boolean
-  coords: Coords
   triggerRef: RefObject<HTMLElement>
   placement: Placement
+  offset: number
   show: () => void
   hide: () => void
 }
@@ -205,8 +159,9 @@ export function Tooltip({
       </span>
       <TooltipPortal
         open={tooltip.open}
-        coords={tooltip.coords}
+        triggerRef={tooltip.triggerRef}
         placement={tooltip.placement}
+        offset={tooltip.offset}
         className={className}
       >
         {content}

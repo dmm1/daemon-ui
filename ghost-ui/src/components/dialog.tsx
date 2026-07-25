@@ -9,7 +9,7 @@ import {
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'motion/react'
 import { cn } from '../lib/cn'
-import { getFocusableElements, Keys } from '../lib/utils'
+import { FocusTrap } from '../primitives/focus-trap'
 
 interface DialogContextValue {
   open: boolean
@@ -91,7 +91,7 @@ export function DialogContent({ children, className }: DialogContentProps) {
             className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
             onClick={() => setOpen(false)}
           />
-          <DialogFocusTrap onEscape={() => setOpen(false)}>
+          <FocusTrap onEscape={() => setOpen(false)}>
             <motion.div
               role="dialog"
               aria-modal="true"
@@ -108,55 +108,11 @@ export function DialogContent({ children, className }: DialogContentProps) {
               {children}
               <DialogClose />
             </motion.div>
-          </DialogFocusTrap>
+          </FocusTrap>
         </>
       )}
     </AnimatePresence>,
     document.body
-  )
-}
-
-function DialogFocusTrap({
-  children,
-  onEscape,
-}: {
-  children: ReactNode
-  onEscape: () => void
-}) {
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLDivElement>) => {
-      if (e.key === Keys.Escape) {
-        onEscape()
-        return
-      }
-      if (e.key !== Keys.Tab) return
-
-      const container = e.currentTarget
-      const elements = getFocusableElements(container)
-      if (elements.length === 0) return
-
-      const first = elements[0]
-      const last = elements[elements.length - 1]
-
-      if (e.shiftKey) {
-        if (document.activeElement === first) {
-          e.preventDefault()
-          last.focus()
-        }
-      } else {
-        if (document.activeElement === last) {
-          e.preventDefault()
-          first.focus()
-        }
-      }
-    },
-    [onEscape]
-  )
-
-  return (
-    <div onKeyDown={handleKeyDown} tabIndex={-1}>
-      {children}
-    </div>
   )
 }
 

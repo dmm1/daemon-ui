@@ -4,16 +4,14 @@ import {
   useState,
   useRef,
   useCallback,
-  useLayoutEffect,
   type ReactNode,
   type RefObject,
 } from 'react'
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'motion/react'
 import { cn } from '../lib/cn'
-import { Keys } from '../lib/utils'
-
-type Placement = 'top' | 'bottom' | 'left' | 'right'
+import { usePopperPosition, type Placement } from '../primitives/popper'
+import { useDismissableLayer } from '../primitives/dismissable'
 
 interface PopoverContextValue {
   open: boolean
@@ -83,44 +81,6 @@ interface PopoverContentProps {
   offset?: number
 }
 
-interface Coords {
-  top: number
-  left: number
-}
-
-const placementTransforms: Record<Placement, string> = {
-  top: 'translate(-50%, -100%)',
-  bottom: 'translate(-50%, 0)',
-  left: 'translate(-100%, -50%)',
-  right: 'translate(0, -50%)',
-}
-
-function calculateCoords(el: Element, placement: Placement, offset: number): Coords {
-  const rect = el.getBoundingClientRect()
-  switch (placement) {
-    case 'top':
-      return {
-        top: rect.top + window.scrollY - offset,
-        left: rect.left + window.scrollX + rect.width / 2,
-      }
-    case 'bottom':
-      return {
-        top: rect.bottom + window.scrollY + offset,
-        left: rect.left + window.scrollX + rect.width / 2,
-      }
-    case 'left':
-      return {
-        top: rect.top + window.scrollY + rect.height / 2,
-        left: rect.left + window.scrollX - offset,
-      }
-    case 'right':
-      return {
-        top: rect.top + window.scrollY + rect.height / 2,
-        left: rect.right + window.scrollX + offset,
-      }
-  }
-}
-
 export function PopoverContent({
   children,
   className,
@@ -128,51 +88,14 @@ export function PopoverContent({
   offset = 8,
 }: PopoverContentProps) {
   const { open, setOpen, triggerRef } = usePopoverContext()
-  const [coords, setCoords] = useState<Coords>({ top: 0, left: 0 })
   const contentRef = useRef<HTMLDivElement>(null)
+  const { coords, transform } = usePopperPosition(triggerRef, { placement, offset, open })
 
-  useLayoutEffect(() => {
-    if (!open || !triggerRef.current) return
-    setCoords(calculateCoords(triggerRef.current, placement, offset))
-
-    const update = () => {
-      if (triggerRef.current) {
-        setCoords(calculateCoords(triggerRef.current, placement, offset))
-      }
-    }
-    window.addEventListener('scroll', update, true)
-    window.addEventListener('resize', update)
-    return () => {
-      window.removeEventListener('scroll', update, true)
-      window.removeEventListener('resize', update)
-    }
-  }, [open, triggerRef, placement, offset])
-
-  useLayoutEffect(() => {
-    if (!open) return
-
-    function handleClickOutside(e: MouseEvent) {
-      if (
-        contentRef.current &&
-        !contentRef.current.contains(e.target as Node) &&
-        triggerRef.current &&
-        !triggerRef.current.contains(e.target as Node)
-      ) {
-        setOpen(false)
-      }
-    }
-
-    function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === Keys.Escape) setOpen(false)
-    }
-
-    document.addEventListener('mousedown', handleClickOutside)
-    document.addEventListener('keydown', handleKeyDown)
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-      document.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [open, setOpen, triggerRef])
+  useDismissableLayer(contentRef, {
+    enabled: open,
+    onDismiss: () => setOpen(false),
+    ignoreRef: triggerRef,
+  })
 
   return createPortal(
     <AnimatePresence>
@@ -187,7 +110,7 @@ export function PopoverContent({
             position: 'absolute',
             top: coords.top,
             left: coords.left,
-            transform: placementTransforms[placement],
+            transform,
             zIndex: 50,
           }}
           className={cn(

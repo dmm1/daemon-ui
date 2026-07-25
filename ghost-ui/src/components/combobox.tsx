@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '../lib/cn'
 import { Keys } from '../lib/utils'
+import { useDismissableLayer } from '../primitives/dismissable'
 
 interface ComboboxOption {
   value: string
@@ -62,25 +63,15 @@ function Combobox({
     if (open) inputRef.current?.focus()
   }, [open])
 
-  useEffect(() => {
-    if (!open) return
-    const handleClick = (e: MouseEvent) => {
-      if (
-        contentRef.current && !contentRef.current.contains(e.target as Node) &&
-        triggerRef.current && !triggerRef.current.contains(e.target as Node)
-      ) {
-        setOpen(false)
-      }
-    }
-    document.addEventListener('mousedown', handleClick)
-    return () => document.removeEventListener('mousedown', handleClick)
-  }, [open])
+  useDismissableLayer(contentRef, {
+    enabled: open,
+    onDismiss: () => setOpen(false),
+    onEscape: () => triggerRef.current?.focus(),
+    ignoreRef: triggerRef,
+  })
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === Keys.Escape) {
-      setOpen(false)
-      triggerRef.current?.focus()
-    } else if (e.key === Keys.ArrowDown) {
+    if (e.key === Keys.ArrowDown) {
       e.preventDefault()
       setActiveIndex((i) => Math.min(i + 1, filtered.length - 1))
     } else if (e.key === Keys.ArrowUp) {

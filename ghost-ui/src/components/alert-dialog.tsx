@@ -9,7 +9,7 @@ import {
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'motion/react'
 import { cn } from '../lib/cn'
-import { getFocusableElements, Keys } from '../lib/utils'
+import { FocusTrap } from '../primitives/focus-trap'
 
 interface AlertDialogContextValue {
   open: boolean
@@ -79,36 +79,6 @@ export function AlertDialogContent({ children, className }: AlertDialogContentPr
     }
   }, [open])
 
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLDivElement>) => {
-      if (e.key === Keys.Escape) {
-        setOpen(false)
-        return
-      }
-      if (e.key !== Keys.Tab) return
-
-      const container = e.currentTarget
-      const elements = getFocusableElements(container)
-      if (elements.length === 0) return
-
-      const first = elements[0]
-      const last = elements[elements.length - 1]
-
-      if (e.shiftKey) {
-        if (document.activeElement === first) {
-          e.preventDefault()
-          last.focus()
-        }
-      } else {
-        if (document.activeElement === last) {
-          e.preventDefault()
-          first.focus()
-        }
-      }
-    },
-    [setOpen]
-  )
-
   return createPortal(
     <AnimatePresence>
       {open && (
@@ -120,7 +90,7 @@ export function AlertDialogContent({ children, className }: AlertDialogContentPr
             transition={{ duration: 0.15 }}
             className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
           />
-          <div onKeyDown={handleKeyDown} tabIndex={-1}>
+          <FocusTrap onEscape={() => setOpen(false)}>
             <motion.div
               role="alertdialog"
               aria-modal="true"
@@ -135,7 +105,7 @@ export function AlertDialogContent({ children, className }: AlertDialogContentPr
             >
               {children}
             </motion.div>
-          </div>
+          </FocusTrap>
         </>
       )}
     </AnimatePresence>,

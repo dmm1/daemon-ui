@@ -9,7 +9,7 @@ import {
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'motion/react'
 import { cn } from '../lib/cn'
-import { getFocusableElements, Keys } from '../lib/utils'
+import { FocusTrap } from '../primitives/focus-trap'
 
 type Side = 'top' | 'right' | 'bottom' | 'left'
 
@@ -91,36 +91,6 @@ export function SheetContent({ children, className, side = 'right' }: SheetConte
     }
   }, [open])
 
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLDivElement>) => {
-      if (e.key === Keys.Escape) {
-        setOpen(false)
-        return
-      }
-      if (e.key !== Keys.Tab) return
-
-      const container = e.currentTarget
-      const elements = getFocusableElements(container)
-      if (elements.length === 0) return
-
-      const first = elements[0]
-      const last = elements[elements.length - 1]
-
-      if (e.shiftKey) {
-        if (document.activeElement === first) {
-          e.preventDefault()
-          last.focus()
-        }
-      } else {
-        if (document.activeElement === last) {
-          e.preventDefault()
-          first.focus()
-        }
-      }
-    },
-    [setOpen]
-  )
-
   const slide = slideVariants[side]
 
   return createPortal(
@@ -135,7 +105,7 @@ export function SheetContent({ children, className, side = 'right' }: SheetConte
             className="fixed inset-0 z-50 bg-black/50"
             onClick={() => setOpen(false)}
           />
-          <div onKeyDown={handleKeyDown} tabIndex={-1}>
+          <FocusTrap onEscape={() => setOpen(false)}>
             <motion.div
               initial={{ opacity: 0, ...slide.initial }}
               animate={{ opacity: 1, ...slide.animate }}
@@ -150,7 +120,7 @@ export function SheetContent({ children, className, side = 'right' }: SheetConte
               {children}
               <SheetClose />
             </motion.div>
-          </div>
+          </FocusTrap>
         </>
       )}
     </AnimatePresence>,

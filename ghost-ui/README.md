@@ -1,7 +1,7 @@
 # ghost-ui
 
 [![npm version](https://img.shields.io/npm/v/ghost-ui.svg)](https://www.npmjs.com/package/ghost-ui)
-[![license](https://img.shields.io/npm/l/ghost-ui.svg)](https://github.com/dmm1/ghost-ui/blob/main/LICENSE)
+[![license](https://img.shields.io/npm/l/ghost-ui.svg)](https://github.com/dmm1/ghost-ui/blob/main/ghost-ui/LICENSE)
 
 Dark HUD terminal-style component library for React 19. Built with Tailwind CSS 4, CVA, and Motion.
 

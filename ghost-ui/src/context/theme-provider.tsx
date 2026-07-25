@@ -76,8 +76,9 @@ export function ThemeProvider({
     if (typeof window === 'undefined') return defaultTheme
     return (localStorage.getItem(storageKey) as Theme) || defaultTheme
   })
+  const [systemTheme, setSystemTheme] = useState<'light' | 'dark'>(getSystemTheme)
 
-  const resolvedTheme = theme === 'system' ? getSystemTheme() : theme
+  const resolvedTheme = theme === 'system' ? systemTheme : theme
 
   const setTheme = useCallback((newTheme: Theme) => {
     setThemeState(newTheme)
@@ -124,12 +125,11 @@ export function ThemeProvider({
   }, [resolvedTheme, colors, typography])
 
   useEffect(() => {
-    if (theme !== 'system') return
     const mql = window.matchMedia('(prefers-color-scheme: dark)')
-    const handler = () => setThemeState((prev) => (prev === 'system' ? 'system' : prev))
+    const handler = (e: MediaQueryListEvent) => setSystemTheme(e.matches ? 'dark' : 'light')
     mql.addEventListener('change', handler)
     return () => mql.removeEventListener('change', handler)
-  }, [theme])
+  }, [])
 
   return (
     <ThemeContext.Provider value={{ theme, resolvedTheme, setTheme }}>

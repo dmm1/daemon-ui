@@ -13,6 +13,7 @@ import {
 import { createPortal } from 'react-dom'
 import { cn } from '../lib/cn'
 import { Keys } from '../lib/utils'
+import { useDismissableLayer } from '../primitives/dismissable'
 
 interface SelectContextValue {
   value: string
@@ -132,21 +133,17 @@ function SelectContent({ className, children, ...props }: SelectContentProps) {
     }
   }, [open, triggerRef, value, items, setActiveIndex])
 
+  useDismissableLayer(contentRef, {
+    enabled: open,
+    onDismiss: () => setOpen(false),
+    onEscape: () => triggerRef.current?.focus(),
+    ignoreRef: triggerRef,
+  })
+
   useEffect(() => {
     if (!open) return
-    const handleClick = (e: MouseEvent) => {
-      if (
-        contentRef.current && !contentRef.current.contains(e.target as Node) &&
-        triggerRef.current && !triggerRef.current.contains(e.target as Node)
-      ) {
-        setOpen(false)
-      }
-    }
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === Keys.Escape) {
-        setOpen(false)
-        triggerRef.current?.focus()
-      } else if (e.key === Keys.ArrowDown) {
+      if (e.key === Keys.ArrowDown) {
         e.preventDefault()
         setActiveIndex(Math.min(activeIndex + 1, items.length - 1))
       } else if (e.key === Keys.ArrowUp) {
@@ -157,13 +154,9 @@ function SelectContent({ className, children, ...props }: SelectContentProps) {
         onValueChange(items[activeIndex])
       }
     }
-    document.addEventListener('mousedown', handleClick)
     document.addEventListener('keydown', handleKey)
-    return () => {
-      document.removeEventListener('mousedown', handleClick)
-      document.removeEventListener('keydown', handleKey)
-    }
-  }, [open, setOpen, triggerRef, activeIndex, setActiveIndex, items, onValueChange])
+    return () => document.removeEventListener('keydown', handleKey)
+  }, [open, activeIndex, setActiveIndex, items, onValueChange])
 
   if (!open) return null
 

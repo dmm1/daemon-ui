@@ -4,7 +4,6 @@ import {
   useCallback,
   useContext,
   useEffect,
-  useLayoutEffect,
   useRef,
   useState,
   type HTMLAttributes,
@@ -14,6 +13,8 @@ import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'motion/react'
 import { cn } from '../lib/cn'
 import { Keys } from '../lib/utils'
+import { usePopperPosition, type Align } from '../primitives/popper'
+import { useDismissableLayer } from '../primitives/dismissable'
 
 interface DropdownMenuContextValue {
   open: boolean
@@ -84,7 +85,7 @@ DropdownMenuTrigger.displayName = 'DropdownMenuTrigger'
 
 interface DropdownMenuContentProps {
   className?: string
-  align?: 'start' | 'center' | 'end'
+  align?: Align
   sideOffset?: number
   children?: ReactNode
 }
@@ -93,43 +94,26 @@ const DropdownMenuContent = forwardRef<HTMLDivElement, DropdownMenuContentProps>
   ({ className, align = 'start', sideOffset = 4, children }, ref) => {
     const { open, setOpen, triggerRef } = useDropdownMenu()
     const contentRef = useRef<HTMLDivElement>(null)
-    const [coords, setCoords] = useState({ top: 0, left: 0 })
     const activeIndex = useRef(-1)
 
-    useLayoutEffect(() => {
-      if (!open || !triggerRef.current) return
-      const rect = triggerRef.current.getBoundingClientRect()
-      let left = rect.left
-      if (align === 'center') left = rect.left + rect.width / 2
-      else if (align === 'end') left = rect.right
+    const { coords, transform } = usePopperPosition(triggerRef, {
+      placement: 'bottom',
+      align,
+      offset: sideOffset,
+      open,
+    })
 
-      setCoords({
-        top: rect.bottom + window.scrollY + sideOffset,
-        left: left + window.scrollX,
-      })
-    }, [open, triggerRef, align, sideOffset])
+    useDismissableLayer(contentRef, {
+      enabled: open,
+      onDismiss: () => setOpen(false),
+      onEscape: () => triggerRef.current?.focus(),
+      ignoreRef: triggerRef,
+    })
 
     useEffect(() => {
       if (!open) return
 
-      function handleClickOutside(e: MouseEvent) {
-        if (
-          contentRef.current &&
-          !contentRef.current.contains(e.target as Node) &&
-          triggerRef.current &&
-          !triggerRef.current.contains(e.target as Node)
-        ) {
-          setOpen(false)
-        }
-      }
-
       function handleKeyDown(e: KeyboardEvent) {
-        if (e.key === Keys.Escape) {
-          setOpen(false)
-          triggerRef.current?.focus()
-          return
-        }
-
         const items = contentRef.current?.querySelectorAll<HTMLElement>('[role="menuitem"]:not([data-disabled])')
         if (!items?.length) return
 
@@ -152,13 +136,9 @@ const DropdownMenuContent = forwardRef<HTMLDivElement, DropdownMenuContentProps>
         }
       }
 
-      document.addEventListener('mousedown', handleClickOutside)
       document.addEventListener('keydown', handleKeyDown)
-      return () => {
-        document.removeEventListener('mousedown', handleClickOutside)
-        document.removeEventListener('keydown', handleKeyDown)
-      }
-    }, [open, setOpen, triggerRef])
+      return () => document.removeEventListener('keydown', handleKeyDown)
+    }, [open])
 
     useEffect(() => {
       if (open) activeIndex.current = -1
@@ -185,10 +165,9 @@ const DropdownMenuContent = forwardRef<HTMLDivElement, DropdownMenuContentProps>
               position: 'absolute',
               top: coords.top,
               left: coords.left,
+              transform,
               transformOrigin,
               zIndex: 50,
-              ...(align === 'center' ? { transform: 'translateX(-50%)' } : {}),
-              ...(align === 'end' ? { transform: 'translateX(-100%)' } : {}),
             }}
             className={cn(
               'bg-background-panel border border-border py-1 min-w-[180px] shadow-lg',

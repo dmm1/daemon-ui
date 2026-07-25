@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '../lib/cn'
 import { Calendar } from './calendar'
+import { useDismissableLayer } from '../primitives/dismissable'
 
 interface DatePickerProps {
   value?: Date
@@ -28,26 +29,11 @@ function DatePicker({ value, onChange, placeholder = 'Pick a date...', className
     }
   }, [open])
 
-  useEffect(() => {
-    if (!open) return
-    const handleClick = (e: MouseEvent) => {
-      if (
-        panelRef.current && !panelRef.current.contains(e.target as Node) &&
-        triggerRef.current && !triggerRef.current.contains(e.target as Node)
-      ) {
-        setOpen(false)
-      }
-    }
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpen(false)
-    }
-    document.addEventListener('mousedown', handleClick)
-    document.addEventListener('keydown', handleKey)
-    return () => {
-      document.removeEventListener('mousedown', handleClick)
-      document.removeEventListener('keydown', handleKey)
-    }
-  }, [open])
+  useDismissableLayer(panelRef, {
+    enabled: open,
+    onDismiss: () => setOpen(false),
+    ignoreRef: triggerRef,
+  })
 
   return (
     <>

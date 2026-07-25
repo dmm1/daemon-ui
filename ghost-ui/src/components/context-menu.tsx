@@ -13,6 +13,7 @@ import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'motion/react'
 import { cn } from '../lib/cn'
 import { Keys } from '../lib/utils'
+import { useDismissableLayer } from '../primitives/dismissable'
 
 interface ContextMenuContextValue {
   open: boolean
@@ -89,21 +90,12 @@ const ContextMenuContent = forwardRef<HTMLDivElement, ContextMenuContentProps>(
     const contentRef = useRef<HTMLDivElement>(null)
     const activeIndex = useRef(-1)
 
+    useDismissableLayer(contentRef, { enabled: open, onDismiss: () => setOpen(false) })
+
     useEffect(() => {
       if (!open) return
 
-      function handleClickOutside(e: MouseEvent) {
-        if (contentRef.current && !contentRef.current.contains(e.target as Node)) {
-          setOpen(false)
-        }
-      }
-
       function handleKeyDown(e: KeyboardEvent) {
-        if (e.key === Keys.Escape) {
-          setOpen(false)
-          return
-        }
-
         const items = contentRef.current?.querySelectorAll<HTMLElement>('[role="menuitem"]:not([data-disabled])')
         if (!items?.length) return
 
@@ -118,13 +110,9 @@ const ContextMenuContent = forwardRef<HTMLDivElement, ContextMenuContentProps>(
         }
       }
 
-      document.addEventListener('mousedown', handleClickOutside)
       document.addEventListener('keydown', handleKeyDown)
-      return () => {
-        document.removeEventListener('mousedown', handleClickOutside)
-        document.removeEventListener('keydown', handleKeyDown)
-      }
-    }, [open, setOpen])
+      return () => document.removeEventListener('keydown', handleKeyDown)
+    }, [open])
 
     useEffect(() => {
       if (open) activeIndex.current = -1
