@@ -2,5 +2,5 @@ packages:
   - daemon-ui
   - daemon-ui-docs
 allowBuilds:
-  esbuild: set this to true or false
-  sharp: set this to true or false
+  esbuild: false
+  sharp: false
