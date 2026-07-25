@@ -1,0 +1,15 @@
+{
+  "title": "Components",
+  "pages": [
+    "index",
+    "---Foundation---",
+    "button",
+    "input",
+    "badge",
+    "card",
+    "---Overlays---",
+    "dialog",
+    "---Navigation---",
+    "tabs"
+  ]
+}

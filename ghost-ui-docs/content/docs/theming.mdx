@@ -1,0 +1,82 @@
+---
+title: Theming
+description: Customize colors, typography, and dark/light mode switching.
+---
+
+## Dark / Light / System
+
+ghost-ui supports three theme modes out of the box:
+
+```tsx
+<ThemeProvider defaultTheme="system">
+  <App />
+</ThemeProvider>
+```
+
+The `ThemeProvider` sets both `color-scheme` and `data-theme` attributes on `<html>`, enabling CSS-based theme switching.
+
+## Custom Colors
+
+Override the default HUD color palette:
+
+```tsx
+<ThemeProvider
+  defaultTheme="dark"
+  colors={{ primary: '#ff6b00' }}
+  typography={{ fontMono: "'Fira Code', monospace" }}
+>
+  <App />
+</ThemeProvider>
+```
+
+## useTheme Hook
+
+Access and control the current theme programmatically:
+
+```tsx
+import { useTheme } from 'ghost-ui'
+
+function ThemeToggle() {
+  const { resolvedTheme, setTheme } = useTheme()
+  return (
+    <button onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}>
+      {resolvedTheme === 'dark' ? 'LIGHT' : 'DARK'}
+    </button>
+  )
+}
+```
+
+## Design Tokens
+
+| Token | Dark | Light |
+|-------|------|-------|
+| `background` | `#11161d` | `#ffffff` |
+| `background-panel` | `#0e1217` | `#f8f9fa` |
+| `primary` | `#07edc7` | `#0891b2` |
+| `foreground` | `#96a8c0` | `#1f2937` |
+| `border` | `rgba(7,237,199,0.12)` | `#e5e7eb` |
+| `success` | `#5cffcc` | `#10b981` |
+| `warning` | `#eab308` | `#f59e0b` |
+| `error` | `#ff6b6b` | `#ef4444` |
+| `accent-cyan` | `#0ae5f5` | `#06b6d4` |
+| `accent-purple` | `#2c4df0` | `#8b5cf6` |
+
+## CSS Variables
+
+All tokens are available as CSS custom properties via Tailwind 4 `@theme`:
+
+```css
+.my-component {
+  background: var(--color-background-panel);
+  border-color: var(--color-border);
+  color: var(--color-foreground);
+}
+```
+
+Or use Tailwind utility classes directly:
+
+```html
+<div class="bg-background-panel border-border text-foreground">
+  Content
+</div>
+```

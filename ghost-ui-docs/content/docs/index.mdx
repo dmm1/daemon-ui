@@ -1,0 +1,56 @@
+---
+title: Getting Started
+description: Install ghost-ui and start building dark HUD terminal-style interfaces.
+---
+
+## Installation
+
+```bash
+pnpm add ghost-ui
+```
+
+Peer dependencies:
+
+```bash
+pnpm add react react-dom tailwindcss
+```
+
+## Quick Start
+
+Import the styles in your CSS entry point:
+
+```css title="app.css"
+@import "ghost-ui/styles";
+```
+
+Add the `@source` directive so Tailwind 4 scans ghost-ui components:
+
+```css title="app.css"
+@source "../node_modules/ghost-ui/src";
+```
+
+Wrap your app with `ThemeProvider`:
+
+```tsx title="App.tsx"
+import { ThemeProvider, Button } from 'ghost-ui'
+
+function App() {
+  return (
+    <ThemeProvider defaultTheme="dark">
+      <Button variant="default">EXECUTE</Button>
+    </ThemeProvider>
+  )
+}
+```
+
+## What's included
+
+ghost-ui ships **57+ components** organized in categories:
+
+- **Foundation** — Button, Input, Label, Badge, Spinner, Typography, Skeleton, Avatar, Progress
+- **Forms** — Checkbox, Switch, RadioGroup, Slider, Textarea, Toggle, Field, Alert
+- **Overlays** — Tooltip, Popover, Dialog, AlertDialog, Sheet, Drawer, Toast
+- **Navigation** — DropdownMenu, ContextMenu, Tabs, Breadcrumb, Pagination, Command
+- **Data Display** — Card, Accordion, Table, DataTable, Select, Combobox, Calendar, Chart, Sidebar
+
+All components follow the HUD terminal aesthetic with dark-first design, monospace typography, and cyan/green accent colors.

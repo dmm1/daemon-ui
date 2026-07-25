@@ -1,0 +1,87 @@
+@theme {
+  /* Backgrounds — dark mode defaults */
+  --color-background: #11161d;
+  --color-background-panel: #0e1217;
+  --color-background-elevated: #161d27;
+
+  /* Foreground / Text */
+  --color-foreground: #96a8c0;
+  --color-foreground-dim: #56595d;
+  --color-foreground-bright: #bcd2f0;
+
+  /* Primary */
+  --color-primary: #07edc7;
+  --color-primary-foreground: #11161d;
+
+  /* Borders */
+  --color-border: rgba(7, 237, 199, 0.12);
+  --color-border-strong: rgba(7, 237, 199, 0.18);
+  --color-ring: #07edc7;
+
+  /* Status */
+  --color-success: #5cffcc;
+  --color-success-foreground: #11161d;
+  --color-warning: #eab308;
+  --color-warning-foreground: #11161d;
+  --color-error: #ff6b6b;
+  --color-error-foreground: #11161d;
+
+  /* Accents */
+  --color-accent-cyan: #0ae5f5;
+  --color-accent-blue: #072ded;
+  --color-accent-purple: #2c4df0;
+
+  /* Muted */
+  --color-muted: #1a2030;
+  --color-muted-foreground: #56595d;
+
+  /* Typography */
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+  --font-sans: system-ui, -apple-system, sans-serif;
+
+  /* Radii */
+  --radius-sm: 0.125rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Light mode overrides */
+[data-theme="light"] {
+  --color-background: #ffffff;
+  --color-background-panel: #f8f9fa;
+  --color-background-elevated: #ffffff;
+
+  --color-foreground: #1f2937;
+  --color-foreground-dim: #9ca3af;
+  --color-foreground-bright: #0f172a;
+
+  --color-primary: #0891b2;
+  --color-primary-foreground: #ffffff;
+
+  --color-border: #e5e7eb;
+  --color-border-strong: #d1d5db;
+  --color-ring: #0891b2;
+
+  --color-success: #10b981;
+  --color-success-foreground: #ffffff;
+  --color-warning: #f59e0b;
+  --color-warning-foreground: #ffffff;
+  --color-error: #ef4444;
+  --color-error-foreground: #ffffff;
+
+  --color-accent-cyan: #06b6d4;
+  --color-accent-blue: #3b82f6;
+  --color-accent-purple: #8b5cf6;
+
+  --color-muted: #f3f4f6;
+  --color-muted-foreground: #6b7280;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+}

@@ -1,0 +1,16 @@
+{
+  "name": "ghost-ui-workspace",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "install:all": "pnpm --dir ghost-ui install && pnpm --dir ghost-ui-docs install",
+    "dev:ui": "pnpm --dir ghost-ui dev",
+    "dev:docs": "pnpm --dir ghost-ui-docs dev",
+    "build:ui": "pnpm --dir ghost-ui build",
+    "build:docs": "pnpm --dir ghost-ui-docs build",
+    "dev": "concurrently -n ui,docs -c cyan,magenta \"pnpm dev:ui\" \"pnpm dev:docs\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.0"
+  }
+}

@@ -1,0 +1,43 @@
+import { Meta } from '@storybook/blocks'
+
+<Meta title="Introduction" />
+
+# ghost-ui
+
+HUD-inspired component library for React 19. Built with Tailwind CSS 4, class-variance-authority, and Motion.
+
+## Features
+
+- **60+ components** — Full set from Button to DataTable
+- **Dark + Light mode** — `light-dark()` CSS functions with system detection
+- **HUD aesthetic** — Monospace typography, ultra-thin borders, terminal-style indicators
+- **Configurable** — Override colors, fonts via ThemeProvider or CSS custom properties
+- **Tree-shakeable** — Import only what you use
+- **No Radix dependency** — Custom primitives (Portal, FocusTrap, Dismissable, Popper)
+- **Accessible** — ARIA attributes, keyboard navigation, focus management
+
+## Quick Start
+
+```tsx
+import { ThemeProvider, Button } from 'ghost-ui'
+import 'ghost-ui/styles'
+
+function App() {
+  return (
+    <ThemeProvider defaultTheme="dark">
+      <Button variant="default">EXECUTE</Button>
+    </ThemeProvider>
+  )
+}
+```
+
+## Design Principles
+
+1. **Sharp edges** — No border-radius on panels
+2. **Ultra-thin borders** — 0.5px for subtle structure
+3. **Uppercase labels** — All-caps with wide letter spacing
+4. **Light font weights** — 300 for large display values
+5. **Semantic color only** — Status colors convey meaning
+6. **Monospace everything** — JetBrains Mono throughout
+7. **Terminal aesthetic** — Text symbols over icons
+8. **Minimal chrome** — Content first, UI recedes
