@@ -11,7 +11,7 @@ daemon-ui uses CSS custom properties via Tailwind 4's `@theme` directive with `l
 Wrap your app with `ThemeProvider` to enable theme switching:
 
 ```tsx
-import { ThemeProvider } from 'daemon-ui'
+import { ThemeProvider } from '@dmm1/daemon-ui'
 
 <ThemeProvider defaultTheme="dark">
   <App />
@@ -30,7 +30,7 @@ import { ThemeProvider } from 'daemon-ui'
 ## useTheme Hook
 
 ```tsx
-import { useTheme } from 'daemon-ui'
+import { useTheme } from '@dmm1/daemon-ui'
 
 function ThemeToggle() {
   const { theme, resolvedTheme, setTheme } = useTheme()

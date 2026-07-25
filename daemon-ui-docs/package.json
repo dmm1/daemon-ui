@@ -9,6 +9,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@dmm1/daemon-ui": "workspace:*",
     "fumadocs-core": "^16.5.2",
     "fumadocs-mdx": "^14.2.7",
     "fumadocs-ui": "^16.5.2",

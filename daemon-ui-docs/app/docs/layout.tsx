@@ -12,7 +12,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       }}
       links={[
         { text: 'GitHub', url: 'https://github.com/dmm1/daemon-ui' },
-        { text: 'npm', url: 'https://www.npmjs.com/package/daemon-ui' },
+        { text: 'npm', url: 'https://www.npmjs.com/package/@dmm1/daemon-ui' },
       ]}
     >
       {children}

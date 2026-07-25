@@ -6,7 +6,7 @@ description: Install daemon-ui and start building dark HUD terminal-style interf
 ## Installation
 
 ```bash
-pnpm add daemon-ui
+pnpm add @dmm1/daemon-ui
 ```
 
 Peer dependencies:
@@ -20,7 +20,7 @@ pnpm add react react-dom tailwindcss
 Import the styles in your CSS entry point:
 
 ```css title="app.css"
-@import "daemon-ui/styles";
+@import "@dmm1/daemon-ui/styles";
 ```
 
 Add the `@source` directive so Tailwind 4 scans daemon-ui components:
@@ -32,7 +32,7 @@ Add the `@source` directive so Tailwind 4 scans daemon-ui components:
 Wrap your app with `ThemeProvider`:
 
 ```tsx title="App.tsx"
-import { ThemeProvider, Button } from 'daemon-ui'
+import { ThemeProvider, Button } from '@dmm1/daemon-ui'
 
 function App() {
   return (

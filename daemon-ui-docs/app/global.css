@@ -1,11 +1,5 @@
-@import 'tailwindcss';
+@import '@dmm1/daemon-ui/styles';
 @import 'fumadocs-ui/css/neutral.css';
 @import 'fumadocs-ui/css/preset.css';
 
-@theme {
-  --color-background: #11161d;
-  --color-foreground: #96a8c0;
-  --color-primary: #07edc7;
-  --color-accent-cyan: #0ae5f5;
-  --font-mono: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
-}
+@source '../node_modules/@dmm1/daemon-ui/src';
