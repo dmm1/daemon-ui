@@ -130,4 +130,4 @@ pnpm storybook
 
 ## License
 
-[MIT](daemon-ui/LICENSE)
+[MIT](LICENSE)

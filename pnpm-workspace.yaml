@@ -1,6 +1,0 @@
-packages:
-  - daemon-ui
-  - daemon-ui-docs
-allowBuilds:
-  esbuild: false
-  sharp: false
