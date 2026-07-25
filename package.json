@@ -78,7 +78,7 @@
     "@storybook/react": "^10.5.4",
     "@storybook/react-vite": "^10.5.4",
     "@storybook/addon-a11y": "^10.5.4",
-    "storybook": "^10.5.4",
+    "storybook": "^8.6.17",
     "vite": "^6.0.0",
     "vite-plugin-dts": "^4.0.0",
     "typescript": "~5.6.0",
