@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { InputGroup, InputAddon } from '../src/components/input-group'
 
 const meta: Meta<typeof InputGroup> = {

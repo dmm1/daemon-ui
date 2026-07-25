@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { ButtonGroup } from '../src/components/button-group'
 import { Button } from '../src/components/button'
 

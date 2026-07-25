@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Calendar } from '../src/components/calendar'
 
 const meta: Meta<typeof Calendar> = {

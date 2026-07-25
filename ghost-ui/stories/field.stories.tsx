@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Field } from '../src/components/field'
 
 const meta: Meta<typeof Field> = {

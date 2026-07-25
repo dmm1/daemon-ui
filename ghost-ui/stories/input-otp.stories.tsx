@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { InputOTP } from '../src/components/input-otp'
 
 const meta: Meta<typeof InputOTP> = {
