@@ -4,14 +4,14 @@ import { Meta } from '@storybook/addon-docs/blocks'
 
 # Theming
 
-ghost-ui uses CSS custom properties via Tailwind 4's `@theme` directive with `light-dark()` functions for automatic dark/light mode.
+daemon-ui uses CSS custom properties via Tailwind 4's `@theme` directive with `light-dark()` functions for automatic dark/light mode.
 
 ## ThemeProvider
 
 Wrap your app with `ThemeProvider` to enable theme switching:
 
 ```tsx
-import { ThemeProvider } from 'ghost-ui'
+import { ThemeProvider } from 'daemon-ui'
 
 <ThemeProvider defaultTheme="dark">
   <App />
@@ -23,14 +23,14 @@ import { ThemeProvider } from 'ghost-ui'
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `defaultTheme` | `'light' \| 'dark' \| 'system'` | `'dark'` | Initial theme |
-| `storageKey` | `string` | `'ghost-ui-theme'` | localStorage key |
+| `storageKey` | `string` | `'daemon-ui-theme'` | localStorage key |
 | `colors` | `ThemeColors` | — | Override color tokens |
 | `typography` | `ThemeTypography` | — | Override font tokens |
 
 ## useTheme Hook
 
 ```tsx
-import { useTheme } from 'ghost-ui'
+import { useTheme } from 'daemon-ui'
 
 function ThemeToggle() {
   const { theme, resolvedTheme, setTheme } = useTheme()

@@ -5,7 +5,7 @@ description: Customize colors, typography, and dark/light mode switching.
 
 ## Dark / Light / System
 
-ghost-ui supports three theme modes out of the box:
+daemon-ui supports three theme modes out of the box:
 
 ```tsx
 <ThemeProvider defaultTheme="system">
@@ -34,7 +34,7 @@ Override the default HUD color palette:
 Access and control the current theme programmatically:
 
 ```tsx
-import { useTheme } from 'ghost-ui'
+import { useTheme } from 'daemon-ui'
 
 function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme()

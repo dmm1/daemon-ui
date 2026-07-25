@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import './global.css';
 
 export const metadata = {
-  title: 'ghost-ui',
+  title: 'daemon-ui',
   description: 'Dark HUD terminal-style component library for React. The shadcn/ui for hackers.',
 };
 

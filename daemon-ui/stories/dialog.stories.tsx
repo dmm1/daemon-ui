@@ -36,7 +36,7 @@ export const Default: Story = {
         <div className="flex flex-col gap-3 my-4">
           <div className="flex flex-col gap-2">
             <Label>Name</Label>
-            <Input defaultValue="Ghost UI Agent" />
+            <Input defaultValue="Daemon UI Agent" />
           </div>
           <div className="flex flex-col gap-2">
             <Label>API Key</Label>

@@ -68,7 +68,7 @@ function getSystemTheme(): 'light' | 'dark' {
 export function ThemeProvider({
   children,
   defaultTheme = 'dark',
-  storageKey = 'ghost-ui-theme',
+  storageKey = 'daemon-ui-theme',
   colors,
   typography,
 }: ThemeProviderProps) {

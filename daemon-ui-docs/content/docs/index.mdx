@@ -1,12 +1,12 @@
 ---
 title: Getting Started
-description: Install ghost-ui and start building dark HUD terminal-style interfaces.
+description: Install daemon-ui and start building dark HUD terminal-style interfaces.
 ---
 
 ## Installation
 
 ```bash
-pnpm add ghost-ui
+pnpm add daemon-ui
 ```
 
 Peer dependencies:
@@ -20,19 +20,19 @@ pnpm add react react-dom tailwindcss
 Import the styles in your CSS entry point:
 
 ```css title="app.css"
-@import "ghost-ui/styles";
+@import "daemon-ui/styles";
 ```
 
-Add the `@source` directive so Tailwind 4 scans ghost-ui components:
+Add the `@source` directive so Tailwind 4 scans daemon-ui components:
 
 ```css title="app.css"
-@source "../node_modules/ghost-ui/src";
+@source "../node_modules/daemon-ui/src";
 ```
 
 Wrap your app with `ThemeProvider`:
 
 ```tsx title="App.tsx"
-import { ThemeProvider, Button } from 'ghost-ui'
+import { ThemeProvider, Button } from 'daemon-ui'
 
 function App() {
   return (
@@ -45,7 +45,7 @@ function App() {
 
 ## What's included
 
-ghost-ui ships **57+ components** organized in categories:
+daemon-ui ships **57+ components** organized in categories:
 
 - **Foundation** — Button, Input, Label, Badge, Spinner, Typography, Skeleton, Avatar, Progress
 - **Forms** — Checkbox, Switch, RadioGroup, Slider, Textarea, Toggle, Field, Alert

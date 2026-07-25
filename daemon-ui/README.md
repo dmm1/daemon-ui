@@ -1,7 +1,7 @@
-# ghost-ui
+# daemon-ui
 
-[![npm version](https://img.shields.io/npm/v/ghost-ui.svg)](https://www.npmjs.com/package/ghost-ui)
-[![license](https://img.shields.io/npm/l/ghost-ui.svg)](https://github.com/dmm1/ghost-ui/blob/main/ghost-ui/LICENSE)
+[![npm version](https://img.shields.io/npm/v/daemon-ui.svg)](https://www.npmjs.com/package/daemon-ui)
+[![license](https://img.shields.io/npm/l/daemon-ui.svg)](https://github.com/dmm1/daemon-ui/blob/main/daemon-ui/LICENSE)
 
 Dark HUD terminal-style component library for React 19. Built with Tailwind CSS 4, CVA, and Motion.
 
@@ -10,7 +10,7 @@ Dark HUD terminal-style component library for React 19. Built with Tailwind CSS 
 ## Install
 
 ```bash
-pnpm add ghost-ui
+pnpm add daemon-ui
 ```
 
 Peer dependencies:
@@ -23,11 +23,11 @@ pnpm add react react-dom tailwindcss
 
 ```css
 /* app.css */
-@import "ghost-ui/styles";
+@import "daemon-ui/styles";
 ```
 
 ```tsx
-import { ThemeProvider, Button } from 'ghost-ui'
+import { ThemeProvider, Button } from 'daemon-ui'
 
 function App() {
   return (
@@ -38,9 +38,9 @@ function App() {
 }
 ```
 
-> Add `@source` in your CSS if using Tailwind 4 to scan ghost-ui components:
+> Add `@source` in your CSS if using Tailwind 4 to scan daemon-ui components:
 > ```css
-> @source "../node_modules/ghost-ui/src";
+> @source "../node_modules/daemon-ui/src";
 > ```
 
 ## Theming
@@ -68,7 +68,7 @@ function App() {
 ### useTheme Hook
 
 ```tsx
-import { useTheme } from 'ghost-ui'
+import { useTheme } from 'daemon-ui'
 
 function Toggle() {
   const { resolvedTheme, setTheme } = useTheme()

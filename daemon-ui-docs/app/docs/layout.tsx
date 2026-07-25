@@ -7,12 +7,12 @@ export default function Layout({ children }: { children: ReactNode }) {
     <DocsLayout
       tree={source.getPageTree()}
       nav={{
-        title: 'ghost-ui',
+        title: 'daemon-ui',
         url: '/',
       }}
       links={[
-        { text: 'GitHub', url: 'https://github.com/dmm1/ghost-ui' },
-        { text: 'npm', url: 'https://www.npmjs.com/package/ghost-ui' },
+        { text: 'GitHub', url: 'https://github.com/dmm1/daemon-ui' },
+        { text: 'npm', url: 'https://www.npmjs.com/package/daemon-ui' },
       ]}
     >
       {children}
