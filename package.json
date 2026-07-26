@@ -3,6 +3,7 @@
   "version": "0.1.2",
   "description": "Dark HUD terminal-style React component library. 57+ components built with Tailwind 4, CVA, and Motion. The shadcn/ui for hackers.",
   "type": "module",
+  "packageManager": "pnpm@11.7.0",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
