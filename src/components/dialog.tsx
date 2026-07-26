@@ -1,9 +1,13 @@
 import {
+  cloneElement,
   createContext,
+  isValidElement,
   useContext,
   useState,
   useCallback,
   useEffect,
+  type MouseEvent,
+  type ReactElement,
   type ReactNode,
 } from 'react'
 import { createPortal } from 'react-dom'
@@ -51,10 +55,26 @@ export function Dialog({ children, open: controlledOpen, onOpenChange }: DialogP
 interface DialogTriggerProps {
   children: ReactNode
   className?: string
+  asChild?: boolean
 }
 
-export function DialogTrigger({ children, className }: DialogTriggerProps) {
+export function DialogTrigger({ children, className, asChild }: DialogTriggerProps) {
   const { setOpen } = useDialogContext()
+
+  if (asChild && isValidElement(children)) {
+    const child = children as ReactElement<{
+      onClick?: (e: MouseEvent) => void
+      className?: string
+    }>
+    return cloneElement(child, {
+      className: cn(child.props.className, className),
+      onClick: (e: MouseEvent) => {
+        child.props.onClick?.(e)
+        setOpen(true)
+      },
+    })
+  }
+
   return (
     <button type="button" className={className} onClick={() => setOpen(true)}>
       {children}
@@ -69,6 +89,11 @@ interface DialogContentProps {
 
 export function DialogContent({ children, className }: DialogContentProps) {
   const { open, setOpen } = useDialogContext()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   useEffect(() => {
     if (!open) return
@@ -78,6 +103,8 @@ export function DialogContent({ children, className }: DialogContentProps) {
       document.body.style.overflow = prev
     }
   }, [open])
+
+  if (!mounted) return null
 
   return createPortal(
     <AnimatePresence>

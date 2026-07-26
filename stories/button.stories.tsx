@@ -10,7 +10,7 @@ export default meta
 type Story = StoryObj<typeof Button>
 
 export const Default: Story = { args: { children: 'BUTTON' } }
-export const daemon: Story = { args: { variant: 'daemon', children: 'daemon' } }
+export const Ghost: Story = { args: { variant: 'ghost', children: 'GHOST' } }
 export const Outline: Story = { args: { variant: 'outline', children: 'OUTLINE' } }
 export const Destructive: Story = { args: { variant: 'destructive', children: 'DELETE' } }
 export const Link: Story = { args: { variant: 'link', children: 'LINK' } }

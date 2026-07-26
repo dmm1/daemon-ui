@@ -1,6 +1,6 @@
 {
   "name": "@dmm1/daemon-ui",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Dark HUD terminal-style React component library. 57+ components built with Tailwind 4, CVA, and Motion. The shadcn/ui for hackers.",
   "type": "module",
   "main": "./dist/index.js",
