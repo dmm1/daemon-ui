@@ -22,7 +22,7 @@
   },
   "files": [
     "dist",
-    "src/styles"
+    "src"
   ],
   "scripts": {
     "dev": "vite build --watch",
