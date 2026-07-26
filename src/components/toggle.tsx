@@ -8,7 +8,8 @@ const toggleVariants = cva(
     variants: {
       variant: {
         default: 'bg-transparent hover:bg-muted text-foreground',
-        outline: 'border border-border bg-transparent hover:bg-muted text-foreground',
+        outline:
+          'border border-border bg-transparent hover:bg-muted text-foreground',
       },
       size: {
         sm: 'h-8 px-2 text-xs',
@@ -20,11 +21,12 @@ const toggleVariants = cva(
       variant: 'default',
       size: 'md',
     },
-  },
+  }
 )
 
 export interface ToggleProps
-  extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onChange'>,
+  extends
+    Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onChange'>,
     VariantProps<typeof toggleVariants> {
   pressed?: boolean
   defaultPressed?: boolean
@@ -32,7 +34,19 @@ export interface ToggleProps
 }
 
 const Toggle = forwardRef<HTMLButtonElement, ToggleProps>(
-  ({ className, variant, size, pressed, defaultPressed, onPressedChange, disabled, ...props }, ref) => {
+  (
+    {
+      className,
+      variant,
+      size,
+      pressed,
+      defaultPressed,
+      onPressedChange,
+      disabled,
+      ...props
+    },
+    ref
+  ) => {
     const isControlled = pressed !== undefined
     const isPressed = isControlled ? pressed : undefined
 
@@ -51,13 +65,13 @@ const Toggle = forwardRef<HTMLButtonElement, ToggleProps>(
         className={cn(
           toggleVariants({ variant, size }),
           isPressed && 'bg-primary/10 text-primary',
-          className,
+          className
         )}
         onClick={handleClick}
         {...props}
       />
     )
-  },
+  }
 )
 
 Toggle.displayName = 'Toggle'

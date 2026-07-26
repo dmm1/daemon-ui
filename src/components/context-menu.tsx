@@ -26,7 +26,10 @@ const ContextMenuContext = createContext<ContextMenuContextValue | null>(null)
 
 function useContextMenu() {
   const ctx = useContext(ContextMenuContext)
-  if (!ctx) throw new Error('ContextMenu compound components must be used within <ContextMenu>')
+  if (!ctx)
+    throw new Error(
+      'ContextMenu compound components must be used within <ContextMenu>'
+    )
   return ctx
 }
 
@@ -48,7 +51,9 @@ function ContextMenu({ children, onOpenChange }: ContextMenuProps) {
   )
 
   return (
-    <ContextMenuContext.Provider value={{ open, setOpen, position, setPosition }}>
+    <ContextMenuContext.Provider
+      value={{ open, setOpen, position, setPosition }}
+    >
       {children}
     </ContextMenuContext.Provider>
   )
@@ -90,18 +95,26 @@ const ContextMenuContent = forwardRef<HTMLDivElement, ContextMenuContentProps>(
     const contentRef = useRef<HTMLDivElement>(null)
     const activeIndex = useRef(-1)
 
-    useDismissableLayer(contentRef, { enabled: open, onDismiss: () => setOpen(false) })
+    useDismissableLayer(contentRef, {
+      enabled: open,
+      onDismiss: () => setOpen(false),
+    })
 
     useEffect(() => {
       if (!open) return
 
       function handleKeyDown(e: KeyboardEvent) {
-        const items = contentRef.current?.querySelectorAll<HTMLElement>('[role="menuitem"]:not([data-disabled])')
+        const items = contentRef.current?.querySelectorAll<HTMLElement>(
+          '[role="menuitem"]:not([data-disabled])'
+        )
         if (!items?.length) return
 
         if (e.key === Keys.ArrowDown) {
           e.preventDefault()
-          activeIndex.current = Math.min(activeIndex.current + 1, items.length - 1)
+          activeIndex.current = Math.min(
+            activeIndex.current + 1,
+            items.length - 1
+          )
           items[activeIndex.current]?.focus()
         } else if (e.key === Keys.ArrowUp) {
           e.preventDefault()
@@ -123,9 +136,13 @@ const ContextMenuContent = forwardRef<HTMLDivElement, ContextMenuContentProps>(
         {open && (
           <motion.div
             ref={(node) => {
-              (contentRef as React.MutableRefObject<HTMLDivElement | null>).current = node
+              ;(
+                contentRef as React.MutableRefObject<HTMLDivElement | null>
+              ).current = node
               if (typeof ref === 'function') ref(node)
-              else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node
+              else if (ref)
+                (ref as React.MutableRefObject<HTMLDivElement | null>).current =
+                  node
             }}
             role="menu"
             initial={{ opacity: 0, scale: 0.95 }}
@@ -201,16 +218,17 @@ const ContextMenuItem = forwardRef<HTMLDivElement, ContextMenuItemProps>(
 )
 ContextMenuItem.displayName = 'ContextMenuItem'
 
-const ContextMenuSeparator = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      role="separator"
-      className={cn('h-px bg-border mx-2 my-1', className)}
-      {...props}
-    />
-  )
-)
+const ContextMenuSeparator = forwardRef<
+  HTMLDivElement,
+  HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    role="separator"
+    className={cn('h-px bg-border mx-2 my-1', className)}
+    {...props}
+  />
+))
 ContextMenuSeparator.displayName = 'ContextMenuSeparator'
 
 export {

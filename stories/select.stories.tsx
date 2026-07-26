@@ -1,6 +1,13 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { Select, SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectValue } from '../src/components/select'
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectGroup,
+  SelectValue,
+} from '../src/components/select'
 
 const meta: Meta = {
   title: 'Components/Select',

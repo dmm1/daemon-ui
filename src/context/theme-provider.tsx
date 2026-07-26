@@ -1,4 +1,11 @@
-import { createContext, useContext, useEffect, useState, useCallback, type ReactNode } from 'react'
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+  type ReactNode,
+} from 'react'
 
 type Theme = 'light' | 'dark' | 'system'
 
@@ -62,7 +69,9 @@ const typographyMap: Record<keyof ThemeTypography, string> = {
 
 function getSystemTheme(): 'light' | 'dark' {
   if (typeof window === 'undefined') return 'dark'
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  return window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light'
 }
 
 export function ThemeProvider({
@@ -76,14 +85,19 @@ export function ThemeProvider({
     if (typeof window === 'undefined') return defaultTheme
     return (localStorage.getItem(storageKey) as Theme) || defaultTheme
   })
-  const [systemTheme, setSystemTheme] = useState<'light' | 'dark'>(getSystemTheme)
+  const [systemTheme, setSystemTheme] = useState<'light' | 'dark'>(
+    getSystemTheme
+  )
 
   const resolvedTheme = theme === 'system' ? systemTheme : theme
 
-  const setTheme = useCallback((newTheme: Theme) => {
-    setThemeState(newTheme)
-    localStorage.setItem(storageKey, newTheme)
-  }, [storageKey])
+  const setTheme = useCallback(
+    (newTheme: Theme) => {
+      setThemeState(newTheme)
+      localStorage.setItem(storageKey, newTheme)
+    },
+    [storageKey]
+  )
 
   useEffect(() => {
     const root = document.documentElement
@@ -126,7 +140,8 @@ export function ThemeProvider({
 
   useEffect(() => {
     const mql = window.matchMedia('(prefers-color-scheme: dark)')
-    const handler = (e: MediaQueryListEvent) => setSystemTheme(e.matches ? 'dark' : 'light')
+    const handler = (e: MediaQueryListEvent) =>
+      setSystemTheme(e.matches ? 'dark' : 'light')
     mql.addEventListener('change', handler)
     return () => mql.removeEventListener('change', handler)
   }, [])

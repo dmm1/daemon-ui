@@ -43,7 +43,10 @@ export const Default: Story = {
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem value="docs">
-          <NavigationMenuLink href="#" className="px-3 py-2 text-xs font-mono uppercase tracking-wider">
+          <NavigationMenuLink
+            href="#"
+            className="px-3 py-2 text-xs font-mono uppercase tracking-wider"
+          >
             Documentation
           </NavigationMenuLink>
         </NavigationMenuItem>

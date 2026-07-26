@@ -1,5 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../src/components/card'
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from '../src/components/card'
 
 const meta: Meta<typeof Card> = {
   title: 'Components/Card',
@@ -33,7 +40,9 @@ export const Default: Story = {
         </div>
       </CardContent>
       <CardFooter>
-        <span className="text-[10px] font-mono text-foreground-dim">Last updated: 2s ago</span>
+        <span className="text-[10px] font-mono text-foreground-dim">
+          Last updated: 2s ago
+        </span>
       </CardFooter>
     </Card>
   ),
@@ -43,7 +52,9 @@ export const Minimal: Story = {
   render: () => (
     <Card className="w-64">
       <CardContent>
-        <p className="text-xs font-mono">Content-only card without header or footer.</p>
+        <p className="text-xs font-mono">
+          Content-only card without header or footer.
+        </p>
       </CardContent>
     </Card>
   ),

@@ -8,12 +8,19 @@ export interface EmptyProps extends HTMLAttributes<HTMLDivElement> {
   action?: ReactNode
 }
 
-function Empty({ className, icon, title, description, action, ...props }: EmptyProps) {
+function Empty({
+  className,
+  icon,
+  title,
+  description,
+  action,
+  ...props
+}: EmptyProps) {
   return (
     <div
       className={cn(
         'flex flex-col items-center justify-center py-12 px-4 text-center',
-        className,
+        className
       )}
       {...props}
     >

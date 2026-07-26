@@ -31,11 +31,15 @@ const CommandContext = createContext<CommandContextValue | null>(null)
 
 function useCommand() {
   const ctx = useContext(CommandContext)
-  if (!ctx) throw new Error('Command compound components must be used within <Command>')
+  if (!ctx)
+    throw new Error('Command compound components must be used within <Command>')
   return ctx
 }
 
-interface CommandProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'> {
+interface CommandProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'onSelect'
+> {
   onSelect?: (value: string) => void
 }
 
@@ -73,7 +77,17 @@ const Command = forwardRef<HTMLDivElement, CommandProps>(
 
     return (
       <CommandContext.Provider
-        value={{ search, setSearch, selectedIndex, setSelectedIndex, items, registerItem, unregisterItem, getFilteredItems, onSelect }}
+        value={{
+          search,
+          setSearch,
+          selectedIndex,
+          setSelectedIndex,
+          items,
+          registerItem,
+          unregisterItem,
+          getFilteredItems,
+          onSelect,
+        }}
       >
         <div
           ref={ref}
@@ -91,47 +105,74 @@ const Command = forwardRef<HTMLDivElement, CommandProps>(
 )
 Command.displayName = 'Command'
 
-const CommandInput = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(
-  ({ className, ...props }, ref) => {
-    const { search, setSearch, selectedIndex, setSelectedIndex, getFilteredItems, onSelect } = useCommand()
+const CommandInput = forwardRef<
+  HTMLInputElement,
+  InputHTMLAttributes<HTMLInputElement>
+>(({ className, ...props }, ref) => {
+  const {
+    search,
+    setSearch,
+    selectedIndex,
+    setSelectedIndex,
+    getFilteredItems,
+    onSelect,
+  } = useCommand()
 
-    return (
-      <div className="flex items-center border-b border-border px-3">
-        <svg width="14" height="14" viewBox="0 0 14 14" className="mr-2 shrink-0 text-foreground-dim">
-          <circle cx="6" cy="6" r="4.5" fill="none" stroke="currentColor" strokeWidth="1.5" />
-          <line x1="9.5" y1="9.5" x2="13" y2="13" stroke="currentColor" strokeWidth="1.5" />
-        </svg>
-        <input
-          ref={ref}
-          type="text"
-          aria-label="Search commands"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          onKeyDown={(e) => {
-            const filtered = getFilteredItems()
-
-            if (e.key === Keys.ArrowDown) {
-              e.preventDefault()
-              setSelectedIndex(Math.min(selectedIndex + 1, filtered.length - 1))
-            } else if (e.key === Keys.ArrowUp) {
-              e.preventDefault()
-              setSelectedIndex(Math.max(selectedIndex - 1, 0))
-            } else if (e.key === Keys.Enter) {
-              e.preventDefault()
-              const item = filtered[selectedIndex]
-              if (item) onSelect?.(item)
-            }
-          }}
-          className={cn(
-            'h-10 w-full bg-transparent text-sm font-mono text-foreground placeholder:text-foreground-dim outline-none',
-            className
-          )}
-          {...props}
+  return (
+    <div className="flex items-center border-b border-border px-3">
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 14 14"
+        className="mr-2 shrink-0 text-foreground-dim"
+      >
+        <circle
+          cx="6"
+          cy="6"
+          r="4.5"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
         />
-      </div>
-    )
-  }
-)
+        <line
+          x1="9.5"
+          y1="9.5"
+          x2="13"
+          y2="13"
+          stroke="currentColor"
+          strokeWidth="1.5"
+        />
+      </svg>
+      <input
+        ref={ref}
+        type="text"
+        aria-label="Search commands"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        onKeyDown={(e) => {
+          const filtered = getFilteredItems()
+
+          if (e.key === Keys.ArrowDown) {
+            e.preventDefault()
+            setSelectedIndex(Math.min(selectedIndex + 1, filtered.length - 1))
+          } else if (e.key === Keys.ArrowUp) {
+            e.preventDefault()
+            setSelectedIndex(Math.max(selectedIndex - 1, 0))
+          } else if (e.key === Keys.Enter) {
+            e.preventDefault()
+            const item = filtered[selectedIndex]
+            if (item) onSelect?.(item)
+          }
+        }}
+        className={cn(
+          'h-10 w-full bg-transparent text-sm font-mono text-foreground placeholder:text-foreground-dim outline-none',
+          className
+        )}
+        {...props}
+      />
+    </div>
+  )
+})
 CommandInput.displayName = 'CommandInput'
 
 const CommandList = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
@@ -152,8 +193,19 @@ interface CommandItemProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const CommandItem = forwardRef<HTMLDivElement, CommandItemProps>(
-  ({ className, value, disabled, onSelect: onItemSelect, children, ...props }, ref) => {
-    const { search, selectedIndex, setSelectedIndex, getFilteredItems, registerItem, unregisterItem, onSelect } = useCommand()
+  (
+    { className, value, disabled, onSelect: onItemSelect, children, ...props },
+    ref
+  ) => {
+    const {
+      search,
+      selectedIndex,
+      setSelectedIndex,
+      getFilteredItems,
+      registerItem,
+      unregisterItem,
+      onSelect,
+    } = useCommand()
     const textRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
@@ -172,9 +224,12 @@ const CommandItem = forwardRef<HTMLDivElement, CommandItemProps>(
     return (
       <div
         ref={(node) => {
-          (textRef as React.MutableRefObject<HTMLDivElement | null>).current = node
+          ;(textRef as React.MutableRefObject<HTMLDivElement | null>).current =
+            node
           if (typeof ref === 'function') ref(node)
-          else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node
+          else if (ref)
+            (ref as React.MutableRefObject<HTMLDivElement | null>).current =
+              node
         }}
         role="option"
         aria-selected={isSelected}
@@ -221,16 +276,17 @@ const CommandGroup = forwardRef<HTMLDivElement, CommandGroupProps>(
 )
 CommandGroup.displayName = 'CommandGroup'
 
-const CommandSeparator = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      role="separator"
-      className={cn('h-px bg-border mx-2 my-1', className)}
-      {...props}
-    />
-  )
-)
+const CommandSeparator = forwardRef<
+  HTMLDivElement,
+  HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    role="separator"
+    className={cn('h-px bg-border mx-2 my-1', className)}
+    {...props}
+  />
+))
 CommandSeparator.displayName = 'CommandSeparator'
 
 const CommandEmpty = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
@@ -243,7 +299,10 @@ const CommandEmpty = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
     return (
       <div
         ref={ref}
-        className={cn('px-3 py-6 text-center text-xs text-foreground-dim font-mono', className)}
+        className={cn(
+          'px-3 py-6 text-center text-xs text-foreground-dim font-mono',
+          className
+        )}
         {...props}
       >
         {children ?? 'No results found.'}

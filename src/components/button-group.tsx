@@ -11,14 +11,14 @@ const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
         className={cn(
           'inline-flex',
           '[&>button]:rounded-none [&>button:first-child]:rounded-l-sm [&>button:last-child]:rounded-r-sm [&>button:not(:first-child)]:-ml-px',
-          className,
+          className
         )}
         {...props}
       >
         {children}
       </div>
     )
-  },
+  }
 )
 
 ButtonGroup.displayName = 'ButtonGroup'

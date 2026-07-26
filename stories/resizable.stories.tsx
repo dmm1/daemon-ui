@@ -1,5 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '../src/components/resizable'
+import {
+  ResizablePanelGroup,
+  ResizablePanel,
+  ResizableHandle,
+} from '../src/components/resizable'
 
 const meta: Meta = {
   title: 'Components/Resizable',
@@ -14,13 +18,17 @@ export const Horizontal: Story = {
       <ResizablePanelGroup direction="horizontal">
         <ResizablePanel>
           <div className="h-full p-4 bg-background-panel">
-            <span className="text-xs font-mono text-foreground-dim uppercase tracking-wider">Left Panel</span>
+            <span className="text-xs font-mono text-foreground-dim uppercase tracking-wider">
+              Left Panel
+            </span>
           </div>
         </ResizablePanel>
         <ResizableHandle />
         <ResizablePanel>
           <div className="h-full p-4">
-            <span className="text-xs font-mono text-foreground-dim uppercase tracking-wider">Right Panel</span>
+            <span className="text-xs font-mono text-foreground-dim uppercase tracking-wider">
+              Right Panel
+            </span>
           </div>
         </ResizablePanel>
       </ResizablePanelGroup>
@@ -34,13 +42,17 @@ export const Vertical: Story = {
       <ResizablePanelGroup direction="vertical">
         <ResizablePanel>
           <div className="h-full p-4 bg-background-panel">
-            <span className="text-xs font-mono text-foreground-dim uppercase tracking-wider">Top</span>
+            <span className="text-xs font-mono text-foreground-dim uppercase tracking-wider">
+              Top
+            </span>
           </div>
         </ResizablePanel>
         <ResizableHandle />
         <ResizablePanel>
           <div className="h-full p-4">
-            <span className="text-xs font-mono text-foreground-dim uppercase tracking-wider">Bottom</span>
+            <span className="text-xs font-mono text-foreground-dim uppercase tracking-wider">
+              Bottom
+            </span>
           </div>
         </ResizablePanel>
       </ResizablePanelGroup>
@@ -54,7 +66,9 @@ export const ThreePanel: Story = {
       <ResizablePanelGroup direction="horizontal">
         <ResizablePanel>
           <div className="h-full p-4 bg-background-panel">
-            <span className="text-xs font-mono text-foreground-dim">Sidebar</span>
+            <span className="text-xs font-mono text-foreground-dim">
+              Sidebar
+            </span>
           </div>
         </ResizablePanel>
         <ResizableHandle index={0} />
@@ -66,7 +80,9 @@ export const ThreePanel: Story = {
         <ResizableHandle index={1} />
         <ResizablePanel>
           <div className="h-full p-4 bg-background-panel">
-            <span className="text-xs font-mono text-foreground-dim">Inspector</span>
+            <span className="text-xs font-mono text-foreground-dim">
+              Inspector
+            </span>
           </div>
         </ResizablePanel>
       </ResizablePanelGroup>

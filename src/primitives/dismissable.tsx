@@ -53,7 +53,15 @@ export function useDismissableLayer(
       document.removeEventListener('mousedown', handleMouseDown)
       document.removeEventListener('keydown', handleKeyDown)
     }
-  }, [enabled, onDismiss, onEscape, containerRef, ignoreRef, disableOutsideClick, disableEscape])
+  }, [
+    enabled,
+    onDismiss,
+    onEscape,
+    containerRef,
+    ignoreRef,
+    disableOutsideClick,
+    disableEscape,
+  ])
 }
 
 interface DismissableProps {
@@ -73,7 +81,12 @@ export function Dismissable({
 }: DismissableProps) {
   const containerRef = useRef<HTMLDivElement>(null)
 
-  useDismissableLayer(containerRef, { enabled, onDismiss, disableOutsideClick, disableEscape })
+  useDismissableLayer(containerRef, {
+    enabled,
+    onDismiss,
+    disableOutsideClick,
+    disableEscape,
+  })
 
   return <div ref={containerRef}>{children}</div>
 }

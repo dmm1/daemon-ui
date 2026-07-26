@@ -1,4 +1,10 @@
-import { createContext, forwardRef, useCallback, useContext, type HTMLAttributes } from 'react'
+import {
+  createContext,
+  forwardRef,
+  useCallback,
+  useContext,
+  type HTMLAttributes,
+} from 'react'
 import { cn } from '../lib/cn'
 
 interface RadioGroupContextValue {
@@ -15,13 +21,25 @@ export interface RadioGroupProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
-  ({ className, value, onValueChange, orientation = 'vertical', children, ...props }, ref) => {
+  (
+    {
+      className,
+      value,
+      onValueChange,
+      orientation = 'vertical',
+      children,
+      ...props
+    },
+    ref
+  ) => {
     const handleKeyDown = useCallback(
       (e: React.KeyboardEvent<HTMLDivElement>) => {
         const items = Array.from(
-          e.currentTarget.querySelectorAll<HTMLElement>('[role="radio"]'),
+          e.currentTarget.querySelectorAll<HTMLElement>('[role="radio"]')
         )
-        const currentIndex = items.findIndex((el) => el === document.activeElement)
+        const currentIndex = items.findIndex(
+          (el) => el === document.activeElement
+        )
         if (currentIndex === -1) return
 
         let nextIndex = currentIndex
@@ -39,7 +57,7 @@ const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
           if (val) onValueChange?.(val)
         }
       },
-      [onValueChange],
+      [onValueChange]
     )
 
     return (
@@ -50,7 +68,7 @@ const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
           className={cn(
             'flex',
             orientation === 'vertical' ? 'flex-col gap-2' : 'flex-row gap-3',
-            className,
+            className
           )}
           onKeyDown={handleKeyDown}
           {...props}
@@ -59,7 +77,7 @@ const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
         </div>
       </RadioGroupContext.Provider>
     )
-  },
+  }
 )
 
 RadioGroup.displayName = 'RadioGroup'
@@ -92,15 +110,17 @@ const RadioGroupItem = forwardRef<HTMLDivElement, RadioGroupItemProps>(
           isSelected && 'border-primary',
           disabled && 'opacity-50 pointer-events-none cursor-default',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-          className,
+          className
         )}
         onClick={handleClick}
         {...props}
       >
-        {isSelected && <span className="block h-2 w-2 rounded-full bg-primary" />}
+        {isSelected && (
+          <span className="block h-2 w-2 rounded-full bg-primary" />
+        )}
       </div>
     )
-  },
+  }
 )
 
 RadioGroupItem.displayName = 'RadioGroupItem'

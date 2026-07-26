@@ -7,7 +7,11 @@ interface FocusTrapProps {
   onEscape?: () => void
 }
 
-export function FocusTrap({ children, enabled = true, onEscape }: FocusTrapProps) {
+export function FocusTrap({
+  children,
+  enabled = true,
+  onEscape,
+}: FocusTrapProps) {
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {

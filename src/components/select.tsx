@@ -42,7 +42,12 @@ interface SelectProps {
   children: ReactNode
 }
 
-function Select({ value: controlledValue, defaultValue = '', onValueChange, children }: SelectProps) {
+function Select({
+  value: controlledValue,
+  defaultValue = '',
+  onValueChange,
+  children,
+}: SelectProps) {
   const [internalValue, setInternalValue] = useState(defaultValue)
   const [open, setOpen] = useState(false)
   const [activeIndex, setActiveIndex] = useState(-1)
@@ -69,51 +74,80 @@ function Select({ value: controlledValue, defaultValue = '', onValueChange, chil
 
   return (
     <SelectContext.Provider
-      value={{ value, onValueChange: handleValueChange, open, setOpen, triggerRef, activeIndex, setActiveIndex, items, registerItem }}
+      value={{
+        value,
+        onValueChange: handleValueChange,
+        open,
+        setOpen,
+        triggerRef,
+        activeIndex,
+        setActiveIndex,
+        items,
+        registerItem,
+      }}
     >
       {children}
     </SelectContext.Provider>
   )
 }
 
-const SelectTrigger = forwardRef<HTMLButtonElement, ButtonHTMLAttributes<HTMLButtonElement>>(
-  ({ className, children, ...props }, ref) => {
-    const { open, setOpen, triggerRef } = useSelect()
+const SelectTrigger = forwardRef<
+  HTMLButtonElement,
+  ButtonHTMLAttributes<HTMLButtonElement>
+>(({ className, children, ...props }, ref) => {
+  const { open, setOpen, triggerRef } = useSelect()
 
-    const combinedRef = (node: HTMLButtonElement | null) => {
-      (triggerRef as React.MutableRefObject<HTMLButtonElement | null>).current = node
-      if (typeof ref === 'function') ref(node)
-      else if (ref) (ref as React.MutableRefObject<HTMLButtonElement | null>).current = node
-    }
-
-    return (
-      <button
-        ref={combinedRef}
-        type="button"
-        role="combobox"
-        aria-haspopup="listbox"
-        aria-expanded={open}
-        onClick={() => setOpen(!open)}
-        className={cn(
-          'flex items-center justify-between h-10 w-full border border-border bg-background px-3 text-sm font-mono',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-          className
-        )}
-        {...props}
-      >
-        {children}
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="shrink-0 ml-2">
-          <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </button>
-    )
+  const combinedRef = (node: HTMLButtonElement | null) => {
+    ;(triggerRef as React.MutableRefObject<HTMLButtonElement | null>).current =
+      node
+    if (typeof ref === 'function') ref(node)
+    else if (ref)
+      (ref as React.MutableRefObject<HTMLButtonElement | null>).current = node
   }
-)
+
+  return (
+    <button
+      ref={combinedRef}
+      type="button"
+      role="combobox"
+      aria-haspopup="listbox"
+      aria-expanded={open}
+      onClick={() => setOpen(!open)}
+      className={cn(
+        'flex items-center justify-between h-10 w-full border border-border bg-background px-3 text-sm font-mono',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+        className
+      )}
+      {...props}
+    >
+      {children}
+      <svg
+        width="12"
+        height="12"
+        viewBox="0 0 12 12"
+        fill="none"
+        className="shrink-0 ml-2"
+      >
+        <path
+          d="M3 4.5L6 7.5L9 4.5"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </button>
+  )
+})
 SelectTrigger.displayName = 'SelectTrigger'
 
 function SelectValue({ placeholder }: { placeholder?: string }) {
   const { value } = useSelect()
-  return <span className={cn('truncate', !value && 'text-foreground-dim')}>{value || placeholder}</span>
+  return (
+    <span className={cn('truncate', !value && 'text-foreground-dim')}>
+      {value || placeholder}
+    </span>
+  )
 }
 
 interface SelectContentProps extends HTMLAttributes<HTMLDivElement> {
@@ -121,7 +155,16 @@ interface SelectContentProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 function SelectContent({ className, children, ...props }: SelectContentProps) {
-  const { open, setOpen, triggerRef, activeIndex, setActiveIndex, items, value, onValueChange } = useSelect()
+  const {
+    open,
+    setOpen,
+    triggerRef,
+    activeIndex,
+    setActiveIndex,
+    items,
+    value,
+    onValueChange,
+  } = useSelect()
   const contentRef = useRef<HTMLDivElement>(null)
   const [pos, setPos] = useState({ top: 0, left: 0, width: 0 })
 
@@ -183,7 +226,12 @@ interface SelectItemProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode
 }
 
-function SelectItem({ value: itemValue, className, children, ...props }: SelectItemProps) {
+function SelectItem({
+  value: itemValue,
+  className,
+  children,
+  ...props
+}: SelectItemProps) {
   const { value, onValueChange, activeIndex, items, registerItem } = useSelect()
   const isSelected = value === itemValue
   const idx = items.indexOf(itemValue)
@@ -211,7 +259,12 @@ function SelectItem({ value: itemValue, className, children, ...props }: SelectI
   )
 }
 
-function SelectGroup({ className, children, label, ...props }: HTMLAttributes<HTMLDivElement> & { label?: string }) {
+function SelectGroup({
+  className,
+  children,
+  label,
+  ...props
+}: HTMLAttributes<HTMLDivElement> & { label?: string }) {
   return (
     <div className={className} {...props}>
       {label && (
@@ -224,4 +277,11 @@ function SelectGroup({ className, children, label, ...props }: HTMLAttributes<HT
   )
 }
 
-export { Select, SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectValue }
+export {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectGroup,
+  SelectValue,
+}

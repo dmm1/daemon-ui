@@ -1,5 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { LineChart, Sparkline, BarChart, AreaChart } from '../src/components/chart'
+import {
+  LineChart,
+  Sparkline,
+  BarChart,
+  AreaChart,
+} from '../src/components/chart'
 
 const meta: Meta = {
   title: 'Components/Chart',
@@ -9,7 +14,20 @@ export default meta
 type Story = StoryObj
 
 const priceData = [142, 145, 138, 152, 148, 155, 160, 158, 165, 170, 168, 175]
-const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+const labels = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+]
 
 export const Line: Story = {
   render: () => (
@@ -17,7 +35,13 @@ export const Line: Story = {
       <LineChart
         series={[
           { label: 'AAPL', data: priceData, variant: 'cyan' },
-          { label: 'MSFT', data: [380, 390, 385, 400, 395, 410, 420, 415, 430, 440, 435, 445].map(v => v / 2.5), variant: 'purple' },
+          {
+            label: 'MSFT',
+            data: [
+              380, 390, 385, 400, 395, 410, 420, 415, 430, 440, 435, 445,
+            ].map((v) => v / 2.5),
+            variant: 'purple',
+          },
         ]}
         labels={labels}
         height={240}
@@ -38,11 +62,17 @@ export const SparklineDemo: Story = {
       </div>
       <div className="flex items-center gap-2">
         <span className="text-xs font-mono text-foreground-dim">TSLA</span>
-        <Sparkline data={[240, 235, 250, 245, 260, 255, 270, 265, 280, 275, 290, 285]} variant="green" />
+        <Sparkline
+          data={[240, 235, 250, 245, 260, 255, 270, 265, 280, 275, 290, 285]}
+          variant="green"
+        />
       </div>
       <div className="flex items-center gap-2">
         <span className="text-xs font-mono text-foreground-dim">NVDA</span>
-        <Sparkline data={[800, 820, 810, 850, 840, 870, 880, 860, 900, 920, 910, 950]} variant="purple" />
+        <Sparkline
+          data={[800, 820, 810, 850, 840, 870, 880, 860, 900, 920, 910, 950]}
+          variant="purple"
+        />
       </div>
     </div>
   ),

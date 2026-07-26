@@ -1,5 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { HoverCard, HoverCardTrigger, HoverCardContent } from '../src/components/hover-card'
+import {
+  HoverCard,
+  HoverCardTrigger,
+  HoverCardContent,
+} from '../src/components/hover-card'
 
 const meta: Meta<typeof HoverCard> = {
   title: 'Overlays/HoverCard',
@@ -24,7 +28,8 @@ export const Default: Story = {
               daemon RIDER
             </p>
             <p className="text-xs text-foreground-dim">
-              Autonomous trading agent powered by LLM analysis. Running on Cloudflare Workers.
+              Autonomous trading agent powered by LLM analysis. Running on
+              Cloudflare Workers.
             </p>
             <div className="flex gap-4 text-[10px] text-foreground-dim">
               <span>24 trades</span>
@@ -43,10 +48,14 @@ export const TopPlacement: Story = {
     <div className="flex items-center justify-center p-40">
       <HoverCard>
         <HoverCardTrigger>
-          <span className="text-primary font-mono text-sm cursor-pointer">Hover for info</span>
+          <span className="text-primary font-mono text-sm cursor-pointer">
+            Hover for info
+          </span>
         </HoverCardTrigger>
         <HoverCardContent placement="top">
-          <p className="text-xs text-foreground-dim">This card appears above the trigger.</p>
+          <p className="text-xs text-foreground-dim">
+            This card appears above the trigger.
+          </p>
         </HoverCardContent>
       </HoverCard>
     </div>

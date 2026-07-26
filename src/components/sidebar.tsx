@@ -28,7 +28,10 @@ interface SidebarProviderProps {
   children: ReactNode
 }
 
-function SidebarProvider({ defaultExpanded = true, children }: SidebarProviderProps) {
+function SidebarProvider({
+  defaultExpanded = true,
+  children,
+}: SidebarProviderProps) {
   const [expanded, setExpanded] = useState(defaultExpanded)
   const toggle = useCallback(() => setExpanded((e) => !e), [])
 
@@ -59,39 +62,59 @@ const Sidebar = forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(
 )
 Sidebar.displayName = 'Sidebar'
 
-const SidebarHeader = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn('p-4 border-b border-border', className)} {...props} />
-  )
-)
+const SidebarHeader = forwardRef<
+  HTMLDivElement,
+  HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn('p-4 border-b border-border', className)}
+    {...props}
+  />
+))
 SidebarHeader.displayName = 'SidebarHeader'
 
-const SidebarContent = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn('flex-1 overflow-y-auto py-2', className)} {...props} />
-  )
-)
+const SidebarContent = forwardRef<
+  HTMLDivElement,
+  HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn('flex-1 overflow-y-auto py-2', className)}
+    {...props}
+  />
+))
 SidebarContent.displayName = 'SidebarContent'
 
-const SidebarFooter = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn('p-4 border-t border-border', className)} {...props} />
-  )
-)
+const SidebarFooter = forwardRef<
+  HTMLDivElement,
+  HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn('p-4 border-t border-border', className)}
+    {...props}
+  />
+))
 SidebarFooter.displayName = 'SidebarFooter'
 
 const SidebarMenu = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn('flex flex-col gap-0.5', className)} {...props} />
+    <div
+      ref={ref}
+      className={cn('flex flex-col gap-0.5', className)}
+      {...props}
+    />
   )
 )
 SidebarMenu.displayName = 'SidebarMenu'
 
-const SidebarMenuItem = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn('flex items-center', className)} {...props} />
-  )
-)
+const SidebarMenuItem = forwardRef<
+  HTMLDivElement,
+  HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div ref={ref} className={cn('flex items-center', className)} {...props} />
+))
 SidebarMenuItem.displayName = 'SidebarMenuItem'
 
 interface SidebarMenuButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -122,29 +145,35 @@ const SidebarMenuButton = forwardRef<HTMLButtonElement, SidebarMenuButtonProps>(
 )
 SidebarMenuButton.displayName = 'SidebarMenuButton'
 
-const SidebarTrigger = forwardRef<HTMLButtonElement, ButtonHTMLAttributes<HTMLButtonElement>>(
-  ({ className, children, ...props }, ref) => {
-    const { toggle } = useSidebar()
-    return (
-      <button
-        ref={ref}
-        type="button"
-        onClick={toggle}
-        className={cn(
-          'flex items-center justify-center h-8 w-8 text-foreground hover:text-primary transition-colors',
-          className
-        )}
-        {...props}
-      >
-        {children ?? (
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          </svg>
-        )}
-      </button>
-    )
-  }
-)
+const SidebarTrigger = forwardRef<
+  HTMLButtonElement,
+  ButtonHTMLAttributes<HTMLButtonElement>
+>(({ className, children, ...props }, ref) => {
+  const { toggle } = useSidebar()
+  return (
+    <button
+      ref={ref}
+      type="button"
+      onClick={toggle}
+      className={cn(
+        'flex items-center justify-center h-8 w-8 text-foreground hover:text-primary transition-colors',
+        className
+      )}
+      {...props}
+    >
+      {children ?? (
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path
+            d="M2 4h12M2 8h12M2 12h12"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+          />
+        </svg>
+      )}
+    </button>
+  )
+})
 SidebarTrigger.displayName = 'SidebarTrigger'
 
 export {

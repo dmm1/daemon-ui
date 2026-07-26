@@ -48,8 +48,12 @@ export const WithOnSelect: Story = {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem onSelect={() => alert('Copy')}>Copy</DropdownMenuItem>
-        <DropdownMenuItem onSelect={() => alert('Paste')}>Paste</DropdownMenuItem>
-        <DropdownMenuItem onSelect={() => alert('Delete')}>Delete</DropdownMenuItem>
+        <DropdownMenuItem onSelect={() => alert('Paste')}>
+          Paste
+        </DropdownMenuItem>
+        <DropdownMenuItem onSelect={() => alert('Delete')}>
+          Delete
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   ),

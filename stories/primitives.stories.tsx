@@ -14,7 +14,9 @@ export function PortalDemo() {
 
   return (
     <div>
-      <p style={{ marginBottom: 8 }}>The text below is rendered via a Portal into the green box:</p>
+      <p style={{ marginBottom: 8 }}>
+        The text below is rendered via a Portal into the green box:
+      </p>
       <div
         ref={setContainer}
         style={{
@@ -40,8 +42,8 @@ export function FocusTrapDemo() {
   return (
     <div>
       <p style={{ marginBottom: 8 }}>
-        Focus is trapped within the box. Press Escape to disable.
-        Status: <strong>{enabled ? 'Trapped' : 'Released'}</strong>
+        Focus is trapped within the box. Press Escape to disable. Status:{' '}
+        <strong>{enabled ? 'Trapped' : 'Released'}</strong>
       </p>
       <FocusTrap enabled={enabled} onEscape={() => setEnabled(false)}>
         <div
@@ -75,7 +77,9 @@ export function DismissableDemo() {
 
   return (
     <div>
-      <p style={{ marginBottom: 8 }}>Click outside the blue box or press Escape to dismiss it.</p>
+      <p style={{ marginBottom: 8 }}>
+        Click outside the blue box or press Escape to dismiss it.
+      </p>
       {visible ? (
         <Dismissable onDismiss={() => setVisible(false)}>
           <div
@@ -90,7 +94,10 @@ export function DismissableDemo() {
           </div>
         </Dismissable>
       ) : (
-        <button onClick={() => setVisible(true)} style={{ padding: '4px 12px' }}>
+        <button
+          onClick={() => setVisible(true)}
+          style={{ padding: '4px 12px' }}
+        >
           Show again
         </button>
       )}
@@ -116,7 +123,12 @@ export function PopperDemo() {
       >
         {open ? 'Hide' : 'Show'} Popper
       </button>
-      <Popper referenceRef={buttonRef} open={open} placement="bottom" offset={8}>
+      <Popper
+        referenceRef={buttonRef}
+        open={open}
+        placement="bottom"
+        offset={8}
+      >
         <div
           style={{
             background: '#1e1b4b',

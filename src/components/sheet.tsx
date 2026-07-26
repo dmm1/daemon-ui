@@ -32,7 +32,11 @@ interface SheetProps {
   onOpenChange?: (open: boolean) => void
 }
 
-export function Sheet({ children, open: controlledOpen, onOpenChange }: SheetProps) {
+export function Sheet({
+  children,
+  open: controlledOpen,
+  onOpenChange,
+}: SheetProps) {
   const [uncontrolledOpen, setUncontrolledOpen] = useState(false)
   const open = controlledOpen ?? uncontrolledOpen
   const setOpen = useCallback(
@@ -50,7 +54,13 @@ export function Sheet({ children, open: controlledOpen, onOpenChange }: SheetPro
   )
 }
 
-export function SheetTrigger({ children, className }: { children: ReactNode; className?: string }) {
+export function SheetTrigger({
+  children,
+  className,
+}: {
+  children: ReactNode
+  className?: string
+}) {
   const { setOpen } = useSheetContext()
   return (
     <button type="button" className={className} onClick={() => setOpen(true)}>
@@ -66,7 +76,10 @@ const sideClasses: Record<Side, string> = {
   bottom: 'fixed inset-x-0 bottom-0 h-auto max-h-[50vh] border-t',
 }
 
-const slideVariants: Record<Side, { initial: Record<string, number>; animate: Record<string, number> }> = {
+const slideVariants: Record<
+  Side,
+  { initial: Record<string, number>; animate: Record<string, number> }
+> = {
   right: { initial: { x: 300 }, animate: { x: 0 } },
   left: { initial: { x: -300 }, animate: { x: 0 } },
   top: { initial: { y: -300 }, animate: { y: 0 } },
@@ -79,7 +92,11 @@ interface SheetContentProps {
   side?: Side
 }
 
-export function SheetContent({ children, className, side = 'right' }: SheetContentProps) {
+export function SheetContent({
+  children,
+  className,
+  side = 'right',
+}: SheetContentProps) {
   const { open, setOpen } = useSheetContext()
 
   useEffect(() => {
@@ -140,29 +157,75 @@ export function SheetClose({ className }: { className?: string }) {
       )}
       aria-label="Close"
     >
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 14 14"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      >
         <path d="M1 1l12 12M13 1L1 13" />
       </svg>
     </button>
   )
 }
 
-export function SheetHeader({ children, className }: { children: ReactNode; className?: string }) {
-  return <div className={cn('flex flex-col gap-1.5 mb-4', className)}>{children}</div>
-}
-
-export function SheetFooter({ children, className }: { children: ReactNode; className?: string }) {
-  return <div className={cn('flex justify-end gap-2 mt-4', className)}>{children}</div>
-}
-
-export function SheetTitle({ children, className }: { children: ReactNode; className?: string }) {
+export function SheetHeader({
+  children,
+  className,
+}: {
+  children: ReactNode
+  className?: string
+}) {
   return (
-    <h2 className={cn('text-sm font-mono uppercase tracking-wider text-foreground-bright', className)}>
+    <div className={cn('flex flex-col gap-1.5 mb-4', className)}>
+      {children}
+    </div>
+  )
+}
+
+export function SheetFooter({
+  children,
+  className,
+}: {
+  children: ReactNode
+  className?: string
+}) {
+  return (
+    <div className={cn('flex justify-end gap-2 mt-4', className)}>
+      {children}
+    </div>
+  )
+}
+
+export function SheetTitle({
+  children,
+  className,
+}: {
+  children: ReactNode
+  className?: string
+}) {
+  return (
+    <h2
+      className={cn(
+        'text-sm font-mono uppercase tracking-wider text-foreground-bright',
+        className
+      )}
+    >
       {children}
     </h2>
   )
 }
 
-export function SheetDescription({ children, className }: { children: ReactNode; className?: string }) {
-  return <p className={cn('text-xs text-foreground-dim', className)}>{children}</p>
+export function SheetDescription({
+  children,
+  className,
+}: {
+  children: ReactNode
+  className?: string
+}) {
+  return (
+    <p className={cn('text-xs text-foreground-dim', className)}>{children}</p>
+  )
 }

@@ -1,4 +1,14 @@
-import { createContext, useContext, useRef, useState, useCallback, useEffect, forwardRef, type HTMLAttributes, type ReactNode } from 'react'
+import {
+  createContext,
+  useContext,
+  useRef,
+  useState,
+  useCallback,
+  useEffect,
+  forwardRef,
+  type HTMLAttributes,
+  type ReactNode,
+} from 'react'
 import { cn } from '../lib/cn'
 
 interface CarouselContextValue {
@@ -36,12 +46,18 @@ const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
 
     const scrollPrev = useCallback(() => {
       if (!scrollRef.current) return
-      scrollRef.current.scrollBy({ left: -scrollRef.current.clientWidth, behavior: 'smooth' })
+      scrollRef.current.scrollBy({
+        left: -scrollRef.current.clientWidth,
+        behavior: 'smooth',
+      })
     }, [])
 
     const scrollNext = useCallback(() => {
       if (!scrollRef.current) return
-      scrollRef.current.scrollBy({ left: scrollRef.current.clientWidth, behavior: 'smooth' })
+      scrollRef.current.scrollBy({
+        left: scrollRef.current.clientWidth,
+        behavior: 'smooth',
+      })
     }, [])
 
     useEffect(() => {
@@ -68,8 +84,20 @@ const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
     }, [autoPlay, scrollNext])
 
     return (
-      <CarouselContext.Provider value={{ scrollRef, scrollPrev, scrollNext, canScrollPrev, canScrollNext }}>
-        <div ref={ref} className={cn('relative overflow-hidden', className)} {...props}>
+      <CarouselContext.Provider
+        value={{
+          scrollRef,
+          scrollPrev,
+          scrollNext,
+          canScrollPrev,
+          canScrollNext,
+        }}
+      >
+        <div
+          ref={ref}
+          className={cn('relative overflow-hidden', className)}
+          {...props}
+        >
           {children}
         </div>
       </CarouselContext.Provider>
@@ -78,32 +106,38 @@ const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
 )
 Carousel.displayName = 'Carousel'
 
-const CarouselContent = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => {
-    const { scrollRef } = useCarousel()
-    const combinedRef = (node: HTMLDivElement | null) => {
-      (scrollRef as React.MutableRefObject<HTMLDivElement | null>).current = node
-      if (typeof ref === 'function') ref(node)
-      else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node
-    }
-    return (
-      <div
-        ref={combinedRef}
-        className={cn(
-          'flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4',
-          className
-        )}
-        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-        {...props}
-      />
-    )
+const CarouselContent = forwardRef<
+  HTMLDivElement,
+  HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => {
+  const { scrollRef } = useCarousel()
+  const combinedRef = (node: HTMLDivElement | null) => {
+    ;(scrollRef as React.MutableRefObject<HTMLDivElement | null>).current = node
+    if (typeof ref === 'function') ref(node)
+    else if (ref)
+      (ref as React.MutableRefObject<HTMLDivElement | null>).current = node
   }
-)
+  return (
+    <div
+      ref={combinedRef}
+      className={cn(
+        'flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4',
+        className
+      )}
+      style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+      {...props}
+    />
+  )
+})
 CarouselContent.displayName = 'CarouselContent'
 
 const CarouselItem = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn('flex-none snap-start', className)} {...props} />
+    <div
+      ref={ref}
+      className={cn('flex-none snap-start', className)}
+      {...props}
+    />
   )
 )
 CarouselItem.displayName = 'CarouselItem'
@@ -160,4 +194,10 @@ const CarouselNext = forwardRef<HTMLButtonElement, CarouselNavProps>(
 )
 CarouselNext.displayName = 'CarouselNext'
 
-export { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext }
+export {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+}

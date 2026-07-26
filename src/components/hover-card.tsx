@@ -22,7 +22,8 @@ const HoverCardContext = createContext<HoverCardContextValue | null>(null)
 
 function useHoverCardContext() {
   const ctx = useContext(HoverCardContext)
-  if (!ctx) throw new Error('HoverCard compounds must be used within <HoverCard>')
+  if (!ctx)
+    throw new Error('HoverCard compounds must be used within <HoverCard>')
   return ctx
 }
 
@@ -32,7 +33,11 @@ interface HoverCardProps {
   leaveDelay?: number
 }
 
-export function HoverCard({ children, enterDelay = 200, leaveDelay = 100 }: HoverCardProps) {
+export function HoverCard({
+  children,
+  enterDelay = 200,
+  leaveDelay = 100,
+}: HoverCardProps) {
   const [open, setOpen] = useState(false)
   const triggerRef = useRef<HTMLElement>(null)
   const enterTimer = useRef<ReturnType<typeof setTimeout>>(null)
@@ -60,7 +65,10 @@ interface HoverCardTriggerProps {
   className?: string
 }
 
-export function HoverCardTrigger({ children, className }: HoverCardTriggerProps) {
+export function HoverCardTrigger({
+  children,
+  className,
+}: HoverCardTriggerProps) {
   const { triggerRef, show, hide } = useHoverCardContext()
   return (
     <span
@@ -90,7 +98,11 @@ export function HoverCardContent({
   offset = 8,
 }: HoverCardContentProps) {
   const { open, triggerRef, show, hide } = useHoverCardContext()
-  const { coords, transform } = usePopperPosition(triggerRef, { placement, offset, open })
+  const { coords, transform } = usePopperPosition(triggerRef, {
+    placement,
+    offset,
+    open,
+  })
 
   return createPortal(
     <AnimatePresence>

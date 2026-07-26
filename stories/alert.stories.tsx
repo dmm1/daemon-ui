@@ -13,7 +13,9 @@ export const Default: Story = {
   render: () => (
     <Alert>
       <AlertTitle>System Notice</AlertTitle>
-      <AlertDescription>Trading session will restart at midnight UTC.</AlertDescription>
+      <AlertDescription>
+        Trading session will restart at midnight UTC.
+      </AlertDescription>
     </Alert>
   ),
 }
@@ -40,7 +42,9 @@ export const Warning: Story = {
   render: () => (
     <Alert variant="warning">
       <AlertTitle>High Volatility</AlertTitle>
-      <AlertDescription>VIX is above threshold. Position sizing reduced.</AlertDescription>
+      <AlertDescription>
+        VIX is above threshold. Position sizing reduced.
+      </AlertDescription>
     </Alert>
   ),
 }
@@ -49,7 +53,9 @@ export const Error: Story = {
   render: () => (
     <Alert variant="error">
       <AlertTitle>Circuit Breaker</AlertTitle>
-      <AlertDescription>Daily loss limit reached. Trading halted.</AlertDescription>
+      <AlertDescription>
+        Daily loss limit reached. Trading halted.
+      </AlertDescription>
     </Alert>
   ),
 }

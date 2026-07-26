@@ -23,7 +23,7 @@ pnpm add react react-dom tailwindcss
 
 ```css
 /* app.css */
-@import "@dmm1/daemon-ui/styles";
+@import '@dmm1/daemon-ui/styles';
 ```
 
 ```tsx
@@ -74,7 +74,9 @@ import { useTheme } from '@dmm1/daemon-ui'
 function Toggle() {
   const { resolvedTheme, setTheme } = useTheme()
   return (
-    <button onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}>
+    <button
+      onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+    >
       {resolvedTheme === 'dark' ? 'LIGHT' : 'DARK'}
     </button>
   )
@@ -109,18 +111,18 @@ Portal, FocusTrap, Dismissable, Popper
 
 ## Design Tokens
 
-| Token | Dark | Light |
-| ----- | ---- | ----- |
-| `background` | `#11161d` | `#ffffff` |
-| `background-panel` | `#0e1217` | `#f8f9fa` |
-| `primary` | `#07edc7` | `#0891b2` |
-| `foreground` | `#96a8c0` | `#1f2937` |
-| `border` | `rgba(7,237,199,0.12)` | `#e5e7eb` |
-| `success` | `#5cffcc` | `#10b981` |
-| `warning` | `#eab308` | `#f59e0b` |
-| `error` | `#ff6b6b` | `#ef4444` |
-| `accent-cyan` | `#0ae5f5` | `#06b6d4` |
-| `accent-purple` | `#2c4df0` | `#8b5cf6` |
+| Token              | Dark                   | Light     |
+| ------------------ | ---------------------- | --------- |
+| `background`       | `#11161d`              | `#ffffff` |
+| `background-panel` | `#0e1217`              | `#f8f9fa` |
+| `primary`          | `#07edc7`              | `#0891b2` |
+| `foreground`       | `#96a8c0`              | `#1f2937` |
+| `border`           | `rgba(7,237,199,0.12)` | `#e5e7eb` |
+| `success`          | `#5cffcc`              | `#10b981` |
+| `warning`          | `#eab308`              | `#f59e0b` |
+| `error`            | `#ff6b6b`              | `#ef4444` |
+| `accent-cyan`      | `#0ae5f5`              | `#06b6d4` |
+| `accent-purple`    | `#2c4df0`              | `#8b5cf6` |
 
 ## Storybook
 

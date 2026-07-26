@@ -11,7 +11,11 @@ type Story = StoryObj<typeof Toggle>
 
 export const Default: Story = { args: { children: 'TOGGLE', pressed: false } }
 export const Pressed: Story = { args: { children: 'ACTIVE', pressed: true } }
-export const Outline: Story = { args: { variant: 'outline', children: 'OUTLINE' } }
+export const Outline: Story = {
+  args: { variant: 'outline', children: 'OUTLINE' },
+}
 export const Small: Story = { args: { size: 'sm', children: 'SM' } }
 export const Large: Story = { args: { size: 'lg', children: 'LG' } }
-export const Disabled: Story = { args: { disabled: true, children: 'DISABLED' } }
+export const Disabled: Story = {
+  args: { disabled: true, children: 'DISABLED' },
+}

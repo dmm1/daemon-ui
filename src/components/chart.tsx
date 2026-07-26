@@ -2,7 +2,8 @@ import { useMemo } from 'react'
 import { motion } from 'motion/react'
 import { cn } from '../lib/cn'
 
-type ChartVariant = 'cyan' | 'blue' | 'green' | 'yellow' | 'red' | 'purple' | 'primary'
+type ChartVariant =
+  'cyan' | 'blue' | 'green' | 'yellow' | 'red' | 'purple' | 'primary'
 
 const variantColors: Record<ChartVariant, string> = {
   cyan: 'var(--color-accent-cyan)',
@@ -60,11 +61,16 @@ function LineChart({
   const chartW = width - padding.left - padding.right
   const chartH = height - padding.top - padding.bottom
 
-  const scaleX = (i: number, len: number) => padding.left + (i / Math.max(len - 1, 1)) * chartW
-  const scaleY = (v: number) => padding.top + chartH - ((v - minVal) / range) * chartH
+  const scaleX = (i: number, len: number) =>
+    padding.left + (i / Math.max(len - 1, 1)) * chartW
+  const scaleY = (v: number) =>
+    padding.top + chartH - ((v - minVal) / range) * chartH
 
   return (
-    <svg viewBox={`0 0 ${width} ${height}`} className={cn('w-full font-mono', className)}>
+    <svg
+      viewBox={`0 0 ${width} ${height}`}
+      className={cn('w-full font-mono', className)}
+    >
       {showGrid && (
         <g>
           {[0, 0.25, 0.5, 0.75, 1].map((t) => {
@@ -72,8 +78,21 @@ function LineChart({
             const val = minVal + range * t
             return (
               <g key={t}>
-                <line x1={padding.left} y1={y} x2={width - padding.right} y2={y} stroke="var(--color-border)" strokeWidth="0.5" />
-                <text x={padding.left - 8} y={y + 3} textAnchor="end" fontSize="8" fill="var(--color-foreground-dim)">
+                <line
+                  x1={padding.left}
+                  y1={y}
+                  x2={width - padding.right}
+                  y2={y}
+                  stroke="var(--color-border)"
+                  strokeWidth="0.5"
+                />
+                <text
+                  x={padding.left - 8}
+                  y={y + 3}
+                  textAnchor="end"
+                  fontSize="8"
+                  fill="var(--color-foreground-dim)"
+                >
                   {formatValue ? formatValue(val) : val.toFixed(1)}
                 </text>
               </g>
@@ -84,7 +103,14 @@ function LineChart({
       {labels && (
         <g>
           {labels.map((l, i) => (
-            <text key={i} x={scaleX(i, labels.length)} y={height - 6} textAnchor="middle" fontSize="8" fill="var(--color-foreground-dim)">
+            <text
+              key={i}
+              x={scaleX(i, labels.length)}
+              y={height - 6}
+              textAnchor="middle"
+              fontSize="8"
+              fill="var(--color-foreground-dim)"
+            >
               {l}
             </text>
           ))}
@@ -92,8 +118,13 @@ function LineChart({
       )}
       {series.map((s, si) => {
         const color = getColor(s.variant)
-        const points = s.data.map((v, i) => ({ x: scaleX(i, s.data.length), y: scaleY(v) }))
-        const linePath = points.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x},${p.y}`).join(' ')
+        const points = s.data.map((v, i) => ({
+          x: scaleX(i, s.data.length),
+          y: scaleY(v),
+        }))
+        const linePath = points
+          .map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x},${p.y}`)
+          .join(' ')
         const areaPath = `${linePath} L${points[points.length - 1].x},${padding.top + chartH} L${points[0].x},${padding.top + chartH} Z`
 
         return (
@@ -127,7 +158,10 @@ function LineChart({
                   fill={color}
                   initial={animated ? { scale: 0 } : undefined}
                   animate={{ scale: 1 }}
-                  transition={{ delay: (i / points.length) * 0.5, duration: 0.2 }}
+                  transition={{
+                    delay: (i / points.length) * 0.5,
+                    duration: 0.2,
+                  }}
                 />
               ))}
           </g>
@@ -147,7 +181,13 @@ interface SparklineProps {
   className?: string
 }
 
-function Sparkline({ data, width = 80, height = 24, variant = 'primary', className }: SparklineProps) {
+function Sparkline({
+  data,
+  width = 80,
+  height = 24,
+  variant = 'primary',
+  className,
+}: SparklineProps) {
   const color = getColor(variant)
   const min = Math.min(...data)
   const max = Math.max(...data)
@@ -160,8 +200,20 @@ function Sparkline({ data, width = 80, height = 24, variant = 'primary', classNa
   })
 
   return (
-    <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} className={cn('inline-block', className)}>
-      <polyline points={points.join(' ')} fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <svg
+      width={width}
+      height={height}
+      viewBox={`0 0 ${width} ${height}`}
+      className={cn('inline-block', className)}
+    >
+      <polyline
+        points={points.join(' ')}
+        fill="none"
+        stroke={color}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   )
 }
@@ -181,7 +233,12 @@ interface BarChartProps {
   className?: string
 }
 
-function BarChart({ data, height = 200, animated = true, className }: BarChartProps) {
+function BarChart({
+  data,
+  height = 200,
+  animated = true,
+  className,
+}: BarChartProps) {
   const padding = { top: 10, right: 10, bottom: 30, left: 50 }
   const width = 600
   const chartW = width - padding.left - padding.right
@@ -191,13 +248,29 @@ function BarChart({ data, height = 200, animated = true, className }: BarChartPr
   const barWidth = Math.min(chartW / data.length - 4, 40)
 
   return (
-    <svg viewBox={`0 0 ${width} ${height}`} className={cn('w-full font-mono', className)}>
+    <svg
+      viewBox={`0 0 ${width} ${height}`}
+      className={cn('w-full font-mono', className)}
+    >
       {[0, 0.5, 1].map((t) => {
         const y = padding.top + chartH * (1 - t)
         return (
           <g key={t}>
-            <line x1={padding.left} y1={y} x2={width - padding.right} y2={y} stroke="var(--color-border)" strokeWidth="0.5" />
-            <text x={padding.left - 8} y={y + 3} textAnchor="end" fontSize="8" fill="var(--color-foreground-dim)">
+            <line
+              x1={padding.left}
+              y1={y}
+              x2={width - padding.right}
+              y2={y}
+              stroke="var(--color-border)"
+              strokeWidth="0.5"
+            />
+            <text
+              x={padding.left - 8}
+              y={y + 3}
+              textAnchor="end"
+              fontSize="8"
+              fill="var(--color-foreground-dim)"
+            >
               {(maxVal * t).toFixed(0)}
             </text>
           </g>
@@ -206,7 +279,10 @@ function BarChart({ data, height = 200, animated = true, className }: BarChartPr
       {data.map((d, i) => {
         const color = getColor(d.variant)
         const barH = (d.value / maxVal) * chartH
-        const x = padding.left + (i / data.length) * chartW + (chartW / data.length - barWidth) / 2
+        const x =
+          padding.left +
+          (i / data.length) * chartW +
+          (chartW / data.length - barWidth) / 2
         const y = padding.top + chartH - barH
         return (
           <g key={i}>
@@ -220,7 +296,13 @@ function BarChart({ data, height = 200, animated = true, className }: BarChartPr
               animate={{ y, height: barH }}
               transition={{ duration: 0.5, delay: i * 0.05, ease: 'easeOut' }}
             />
-            <text x={x + barWidth / 2} y={height - 8} textAnchor="middle" fontSize="8" fill="var(--color-foreground-dim)">
+            <text
+              x={x + barWidth / 2}
+              y={height - 8}
+              textAnchor="middle"
+              fontSize="8"
+              fill="var(--color-foreground-dim)"
+            >
               {d.label}
             </text>
           </g>
@@ -240,7 +322,13 @@ interface AreaChartProps {
   className?: string
 }
 
-function AreaChart({ data, height = 200, variant = 'primary', animated = true, className }: AreaChartProps) {
+function AreaChart({
+  data,
+  height = 200,
+  variant = 'primary',
+  animated = true,
+  className,
+}: AreaChartProps) {
   const padding = { top: 10, right: 10, bottom: 10, left: 10 }
   const width = 600
   const chartW = width - padding.left - padding.right
@@ -260,11 +348,16 @@ function AreaChart({ data, height = 200, variant = 'primary', animated = true, c
     [data, chartW, chartH, min, range, padding.left, padding.top]
   )
 
-  const linePath = points.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x},${p.y}`).join(' ')
+  const linePath = points
+    .map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x},${p.y}`)
+    .join(' ')
   const areaPath = `${linePath} L${points[points.length - 1].x},${padding.top + chartH} L${points[0].x},${padding.top + chartH} Z`
 
   return (
-    <svg viewBox={`0 0 ${width} ${height}`} className={cn('w-full font-mono', className)}>
+    <svg
+      viewBox={`0 0 ${width} ${height}`}
+      className={cn('w-full font-mono', className)}
+    >
       <defs>
         <linearGradient id={`area-grad-${variant}`} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor={color} stopOpacity="0.3" />
@@ -292,4 +385,12 @@ function AreaChart({ data, height = 200, variant = 'primary', animated = true, c
 }
 
 export { LineChart, Sparkline, BarChart, AreaChart }
-export type { Series, LineChartProps, SparklineProps, BarData, BarChartProps, AreaChartProps, ChartVariant }
+export type {
+  Series,
+  LineChartProps,
+  SparklineProps,
+  BarData,
+  BarChartProps,
+  AreaChartProps,
+  ChartVariant,
+}

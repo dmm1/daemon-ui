@@ -25,7 +25,10 @@ export const Vertical: Story = {
 
 export const Horizontal: Story = {
   render: () => (
-    <ScrollArea orientation="horizontal" className="w-[300px] border border-border">
+    <ScrollArea
+      orientation="horizontal"
+      className="w-[300px] border border-border"
+    >
       <div className="flex gap-4 p-4 w-[800px]">
         {Array.from({ length: 12 }, (_, i) => (
           <div

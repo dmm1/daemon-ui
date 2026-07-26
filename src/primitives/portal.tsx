@@ -7,7 +7,8 @@ interface PortalProps {
 }
 
 export function Portal({ children, container }: PortalProps) {
-  const target = container || (typeof document !== 'undefined' ? document.body : null)
+  const target =
+    container || (typeof document !== 'undefined' ? document.body : null)
   if (!target) return null
   return createPortal(children, target)
 }

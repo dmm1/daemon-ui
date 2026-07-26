@@ -20,7 +20,8 @@ const AlertDialogContext = createContext<AlertDialogContextValue | null>(null)
 
 function useAlertDialogContext() {
   const ctx = useContext(AlertDialogContext)
-  if (!ctx) throw new Error('AlertDialog compounds must be used within <AlertDialog>')
+  if (!ctx)
+    throw new Error('AlertDialog compounds must be used within <AlertDialog>')
   return ctx
 }
 
@@ -30,7 +31,11 @@ interface AlertDialogProps {
   onOpenChange?: (open: boolean) => void
 }
 
-export function AlertDialog({ children, open: controlledOpen, onOpenChange }: AlertDialogProps) {
+export function AlertDialog({
+  children,
+  open: controlledOpen,
+  onOpenChange,
+}: AlertDialogProps) {
   const [uncontrolledOpen, setUncontrolledOpen] = useState(false)
   const open = controlledOpen ?? uncontrolledOpen
   const setOpen = useCallback(
@@ -53,7 +58,10 @@ interface AlertDialogTriggerProps {
   className?: string
 }
 
-export function AlertDialogTrigger({ children, className }: AlertDialogTriggerProps) {
+export function AlertDialogTrigger({
+  children,
+  className,
+}: AlertDialogTriggerProps) {
   const { setOpen } = useAlertDialogContext()
   return (
     <button type="button" className={className} onClick={() => setOpen(true)}>
@@ -67,7 +75,10 @@ interface AlertDialogContentProps {
   className?: string
 }
 
-export function AlertDialogContent({ children, className }: AlertDialogContentProps) {
+export function AlertDialogContent({
+  children,
+  className,
+}: AlertDialogContentProps) {
   const { open, setOpen } = useAlertDialogContext()
 
   useEffect(() => {
@@ -113,24 +124,61 @@ export function AlertDialogContent({ children, className }: AlertDialogContentPr
   )
 }
 
-export function AlertDialogHeader({ children, className }: { children: ReactNode; className?: string }) {
-  return <div className={cn('flex flex-col gap-1.5', className)}>{children}</div>
-}
-
-export function AlertDialogFooter({ children, className }: { children: ReactNode; className?: string }) {
-  return <div className={cn('flex justify-end gap-2 mt-4', className)}>{children}</div>
-}
-
-export function AlertDialogTitle({ children, className }: { children: ReactNode; className?: string }) {
+export function AlertDialogHeader({
+  children,
+  className,
+}: {
+  children: ReactNode
+  className?: string
+}) {
   return (
-    <h2 className={cn('text-sm font-mono uppercase tracking-wider text-foreground-bright', className)}>
+    <div className={cn('flex flex-col gap-1.5', className)}>{children}</div>
+  )
+}
+
+export function AlertDialogFooter({
+  children,
+  className,
+}: {
+  children: ReactNode
+  className?: string
+}) {
+  return (
+    <div className={cn('flex justify-end gap-2 mt-4', className)}>
+      {children}
+    </div>
+  )
+}
+
+export function AlertDialogTitle({
+  children,
+  className,
+}: {
+  children: ReactNode
+  className?: string
+}) {
+  return (
+    <h2
+      className={cn(
+        'text-sm font-mono uppercase tracking-wider text-foreground-bright',
+        className
+      )}
+    >
       {children}
     </h2>
   )
 }
 
-export function AlertDialogDescription({ children, className }: { children: ReactNode; className?: string }) {
-  return <p className={cn('text-xs text-foreground-dim', className)}>{children}</p>
+export function AlertDialogDescription({
+  children,
+  className,
+}: {
+  children: ReactNode
+  className?: string
+}) {
+  return (
+    <p className={cn('text-xs text-foreground-dim', className)}>{children}</p>
+  )
 }
 
 interface AlertDialogActionProps {
@@ -139,7 +187,11 @@ interface AlertDialogActionProps {
   onClick?: () => void
 }
 
-export function AlertDialogAction({ children, className, onClick }: AlertDialogActionProps) {
+export function AlertDialogAction({
+  children,
+  className,
+  onClick,
+}: AlertDialogActionProps) {
   const { setOpen } = useAlertDialogContext()
   return (
     <button
@@ -164,7 +216,11 @@ interface AlertDialogCancelProps {
   onClick?: () => void
 }
 
-export function AlertDialogCancel({ children, className, onClick }: AlertDialogCancelProps) {
+export function AlertDialogCancel({
+  children,
+  className,
+  onClick,
+}: AlertDialogCancelProps) {
   const { setOpen } = useAlertDialogContext()
   return (
     <button

@@ -1,5 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { Popover, PopoverTrigger, PopoverContent } from '../src/components/popover'
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from '../src/components/popover'
 import { Button } from '../src/components/button'
 import { Input } from '../src/components/input'
 import { Label } from '../src/components/label'
@@ -47,7 +51,9 @@ export const TopPlacement: Story = {
           <Button>TOP POPOVER</Button>
         </PopoverTrigger>
         <PopoverContent placement="top">
-          <p className="text-xs text-foreground-dim">Content appears above the trigger</p>
+          <p className="text-xs text-foreground-dim">
+            Content appears above the trigger
+          </p>
         </PopoverContent>
       </Popover>
     </div>

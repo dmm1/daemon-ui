@@ -1,6 +1,13 @@
 import { useState, useMemo, type ReactNode } from 'react'
 import { cn } from '../lib/cn'
-import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from './table'
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from './table'
 
 interface Column<T> {
   key: string
@@ -60,8 +67,12 @@ function DataTable<T>({
     })
   }, [filtered, sortKey, sortDir])
 
-  const totalPages = paginated ? Math.max(1, Math.ceil(sorted.length / pageSize)) : 1
-  const pageData = paginated ? sorted.slice(page * pageSize, (page + 1) * pageSize) : sorted
+  const totalPages = paginated
+    ? Math.max(1, Math.ceil(sorted.length / pageSize))
+    : 1
+  const pageData = paginated
+    ? sorted.slice(page * pageSize, (page + 1) * pageSize)
+    : sorted
 
   const handleSort = (key: string) => {
     if (sortKey === key) {
@@ -78,7 +89,10 @@ function DataTable<T>({
         <input
           type="text"
           value={search}
-          onChange={(e) => { setSearch(e.target.value); setPage(0) }}
+          onChange={(e) => {
+            setSearch(e.target.value)
+            setPage(0)
+          }}
           placeholder="Search..."
           aria-label="Search table"
           className="border border-border bg-background px-3 py-1.5 text-xs font-mono mb-3 w-full outline-none focus:ring-1 focus:ring-ring"
@@ -90,14 +104,26 @@ function DataTable<T>({
             {columns.map((col) => (
               <TableHead
                 key={col.key}
-                className={col.sortable ? 'cursor-pointer select-none hover:text-foreground' : undefined}
+                className={
+                  col.sortable
+                    ? 'cursor-pointer select-none hover:text-foreground'
+                    : undefined
+                }
                 onClick={col.sortable ? () => handleSort(col.key) : undefined}
-                aria-sort={col.sortable && sortKey === col.key ? (sortDir === 'asc' ? 'ascending' : 'descending') : undefined}
+                aria-sort={
+                  col.sortable && sortKey === col.key
+                    ? sortDir === 'asc'
+                      ? 'ascending'
+                      : 'descending'
+                    : undefined
+                }
               >
                 <span className="flex items-center gap-1">
                   {col.header}
                   {col.sortable && sortKey === col.key && (
-                    <span className="text-primary">{sortDir === 'asc' ? '▴' : '▾'}</span>
+                    <span className="text-primary">
+                      {sortDir === 'asc' ? '▴' : '▾'}
+                    </span>
                   )}
                 </span>
               </TableHead>
@@ -107,7 +133,10 @@ function DataTable<T>({
         <TableBody>
           {pageData.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={columns.length} className="text-center text-foreground-dim py-8">
+              <TableCell
+                colSpan={columns.length}
+                className="text-center text-foreground-dim py-8"
+              >
                 No data
               </TableCell>
             </TableRow>
@@ -116,7 +145,9 @@ function DataTable<T>({
               <TableRow key={i}>
                 {columns.map((col) => (
                   <TableCell key={col.key}>
-                    {col.render ? col.render(row) : String(getCellValue(row, col.key) ?? '')}
+                    {col.render
+                      ? col.render(row)
+                      : String(getCellValue(row, col.key) ?? '')}
                   </TableCell>
                 ))}
               </TableRow>

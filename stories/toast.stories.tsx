@@ -17,7 +17,10 @@ export const Default: Story = {
         <Button
           variant="outline"
           onClick={() =>
-            toast({ title: 'Order Placed', description: 'BUY 100 AAPL @ $182.52' })
+            toast({
+              title: 'Order Placed',
+              description: 'BUY 100 AAPL @ $182.52',
+            })
           }
         >
           DEFAULT TOAST
@@ -25,7 +28,9 @@ export const Default: Story = {
         <Button
           variant="outline"
           onClick={() =>
-            toast.success('Trade Executed', { description: 'Position opened successfully' })
+            toast.success('Trade Executed', {
+              description: 'Position opened successfully',
+            })
           }
         >
           SUCCESS
@@ -33,7 +38,9 @@ export const Default: Story = {
         <Button
           variant="outline"
           onClick={() =>
-            toast.error('Order Failed', { description: 'Insufficient buying power' })
+            toast.error('Order Failed', {
+              description: 'Insufficient buying power',
+            })
           }
         >
           ERROR
@@ -41,7 +48,9 @@ export const Default: Story = {
         <Button
           variant="outline"
           onClick={() =>
-            toast.warning('Circuit Breaker', { description: 'Daily loss limit approaching' })
+            toast.warning('Circuit Breaker', {
+              description: 'Daily loss limit approaching',
+            })
           }
         >
           WARNING

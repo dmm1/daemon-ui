@@ -1,7 +1,15 @@
-import { forwardRef, useCallback, useRef, type InputHTMLAttributes } from 'react'
+import {
+  forwardRef,
+  useCallback,
+  useRef,
+  type InputHTMLAttributes,
+} from 'react'
 import { cn } from '../lib/cn'
 
-export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'onChange'> {
+export interface CheckboxProps extends Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  'type' | 'onChange'
+> {
   checked?: boolean
   defaultChecked?: boolean
   onCheckedChange?: (checked: boolean) => void
@@ -9,7 +17,18 @@ export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement
 }
 
 const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
-  ({ className, checked, defaultChecked, onCheckedChange, indeterminate, disabled, ...props }, ref) => {
+  (
+    {
+      className,
+      checked,
+      defaultChecked,
+      onCheckedChange,
+      indeterminate,
+      disabled,
+      ...props
+    },
+    ref
+  ) => {
     const innerRef = useRef<HTMLInputElement>(null)
     const inputRef = (ref as React.RefObject<HTMLInputElement>) || innerRef
 
@@ -25,7 +44,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       (e: React.ChangeEvent<HTMLInputElement>) => {
         onCheckedChange?.(e.target.checked)
       },
-      [onCheckedChange],
+      [onCheckedChange]
     )
 
     const isChecked = checked ?? undefined
@@ -37,7 +56,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           isChecked && 'border-primary bg-primary',
           indeterminate && !isChecked && 'border-primary bg-primary',
           disabled && 'opacity-50 pointer-events-none cursor-default',
-          className,
+          className
         )}
         onClick={handleClick}
         role="checkbox"
@@ -73,7 +92,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
         )}
       </div>
     )
-  },
+  }
 )
 
 Checkbox.displayName = 'Checkbox'

@@ -29,7 +29,11 @@
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: color-mix(in srgb, var(--color-foreground-dim) 40%, transparent);
+    background: color-mix(
+      in srgb,
+      var(--color-foreground-dim) 40%,
+      transparent
+    );
     border-radius: 2px;
   }
   ::-webkit-scrollbar-thumb:hover {

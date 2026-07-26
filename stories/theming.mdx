@@ -13,19 +13,19 @@ Wrap your app with `ThemeProvider` to enable theme switching:
 ```tsx
 import { ThemeProvider } from '@dmm1/daemon-ui'
 
-<ThemeProvider defaultTheme="dark">
+;<ThemeProvider defaultTheme="dark">
   <App />
 </ThemeProvider>
 ```
 
 ### Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `defaultTheme` | `'light' \| 'dark' \| 'system'` | `'dark'` | Initial theme |
-| `storageKey` | `string` | `'daemon-ui-theme'` | localStorage key |
-| `colors` | `ThemeColors` | — | Override color tokens |
-| `typography` | `ThemeTypography` | — | Override font tokens |
+| Prop           | Type                            | Default             | Description           |
+| -------------- | ------------------------------- | ------------------- | --------------------- |
+| `defaultTheme` | `'light' \| 'dark' \| 'system'` | `'dark'`            | Initial theme         |
+| `storageKey`   | `string`                        | `'daemon-ui-theme'` | localStorage key      |
+| `colors`       | `ThemeColors`                   | —                   | Override color tokens |
+| `typography`   | `ThemeTypography`               | —                   | Override font tokens  |
 
 ## useTheme Hook
 
@@ -35,7 +35,9 @@ import { useTheme } from '@dmm1/daemon-ui'
 function ThemeToggle() {
   const { theme, resolvedTheme, setTheme } = useTheme()
   return (
-    <button onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}>
+    <button
+      onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+    >
       {resolvedTheme === 'dark' ? 'LIGHT' : 'DARK'}
     </button>
   )
@@ -65,15 +67,15 @@ Or override via CSS:
 
 ## Color Tokens
 
-| Token | Dark | Light |
-|-------|------|-------|
-| `--color-background` | `#11161d` | `#ffffff` |
-| `--color-background-panel` | `#0e1217` | `#f8f9fa` |
-| `--color-primary` | `#07edc7` | `#0891b2` |
-| `--color-foreground` | `#96a8c0` | `#1f2937` |
-| `--color-foreground-dim` | `#56595d` | `#9ca3af` |
-| `--color-foreground-bright` | `#bcd2f0` | `#0f172a` |
-| `--color-border` | `rgba(7,237,199,0.12)` | `#e5e7eb` |
-| `--color-success` | `#5cffcc` | `#10b981` |
-| `--color-warning` | `#eab308` | `#f59e0b` |
-| `--color-error` | `#ff6b6b` | `#ef4444` |
+| Token                       | Dark                   | Light     |
+| --------------------------- | ---------------------- | --------- |
+| `--color-background`        | `#11161d`              | `#ffffff` |
+| `--color-background-panel`  | `#0e1217`              | `#f8f9fa` |
+| `--color-primary`           | `#07edc7`              | `#0891b2` |
+| `--color-foreground`        | `#96a8c0`              | `#1f2937` |
+| `--color-foreground-dim`    | `#56595d`              | `#9ca3af` |
+| `--color-foreground-bright` | `#bcd2f0`              | `#0f172a` |
+| `--color-border`            | `rgba(7,237,199,0.12)` | `#e5e7eb` |
+| `--color-success`           | `#5cffcc`              | `#10b981` |
+| `--color-warning`           | `#eab308`              | `#f59e0b` |
+| `--color-error`             | `#ff6b6b`              | `#ef4444` |

@@ -35,10 +35,7 @@ const H3 = forwardRef<HTMLHeadingElement, TypographyProps>(
   ({ className, ...props }, ref) => (
     <h3
       ref={ref}
-      className={cn(
-        'text-2xl font-light text-foreground-bright',
-        className
-      )}
+      className={cn('text-2xl font-light text-foreground-bright', className)}
       {...props}
     />
   )
@@ -49,10 +46,7 @@ const H4 = forwardRef<HTMLHeadingElement, TypographyProps>(
   ({ className, ...props }, ref) => (
     <h4
       ref={ref}
-      className={cn(
-        'text-xl font-light text-foreground-bright',
-        className
-      )}
+      className={cn('text-xl font-light text-foreground-bright', className)}
       {...props}
     />
   )

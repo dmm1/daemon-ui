@@ -9,7 +9,19 @@ export interface ItemProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const Item = forwardRef<HTMLDivElement, ItemProps>(
-  ({ className, leading, trailing, selected, disabled, children, onClick, ...props }, ref) => {
+  (
+    {
+      className,
+      leading,
+      trailing,
+      selected,
+      disabled,
+      children,
+      onClick,
+      ...props
+    },
+    ref
+  ) => {
     return (
       <div
         ref={ref}
@@ -20,7 +32,7 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(
           onClick && 'cursor-pointer hover:bg-muted/50',
           selected && 'bg-primary/5 text-primary',
           disabled && 'opacity-50 pointer-events-none',
-          className,
+          className
         )}
         onClick={disabled ? undefined : onClick}
         aria-disabled={disabled}
@@ -32,7 +44,7 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(
         {trailing && <span className="shrink-0">{trailing}</span>}
       </div>
     )
-  },
+  }
 )
 
 Item.displayName = 'Item'

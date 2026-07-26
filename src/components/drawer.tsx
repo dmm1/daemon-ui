@@ -30,7 +30,11 @@ interface DrawerProps {
   onOpenChange?: (open: boolean) => void
 }
 
-export function Drawer({ children, open: controlledOpen, onOpenChange }: DrawerProps) {
+export function Drawer({
+  children,
+  open: controlledOpen,
+  onOpenChange,
+}: DrawerProps) {
   const [uncontrolledOpen, setUncontrolledOpen] = useState(false)
   const open = controlledOpen ?? uncontrolledOpen
   const setOpen = useCallback(
@@ -48,7 +52,13 @@ export function Drawer({ children, open: controlledOpen, onOpenChange }: DrawerP
   )
 }
 
-export function DrawerTrigger({ children, className }: { children: ReactNode; className?: string }) {
+export function DrawerTrigger({
+  children,
+  className,
+}: {
+  children: ReactNode
+  className?: string
+}) {
   const { setOpen } = useDrawerContext()
   return (
     <button type="button" className={className} onClick={() => setOpen(true)}>
@@ -123,22 +133,61 @@ export function DrawerContent({ children, className }: DrawerContentProps) {
   )
 }
 
-export function DrawerHeader({ children, className }: { children: ReactNode; className?: string }) {
-  return <div className={cn('flex flex-col gap-1.5 px-6 pb-2', className)}>{children}</div>
-}
-
-export function DrawerFooter({ children, className }: { children: ReactNode; className?: string }) {
-  return <div className={cn('flex justify-end gap-2 px-6 py-4', className)}>{children}</div>
-}
-
-export function DrawerTitle({ children, className }: { children: ReactNode; className?: string }) {
+export function DrawerHeader({
+  children,
+  className,
+}: {
+  children: ReactNode
+  className?: string
+}) {
   return (
-    <h2 className={cn('text-sm font-mono uppercase tracking-wider text-foreground-bright', className)}>
+    <div className={cn('flex flex-col gap-1.5 px-6 pb-2', className)}>
+      {children}
+    </div>
+  )
+}
+
+export function DrawerFooter({
+  children,
+  className,
+}: {
+  children: ReactNode
+  className?: string
+}) {
+  return (
+    <div className={cn('flex justify-end gap-2 px-6 py-4', className)}>
+      {children}
+    </div>
+  )
+}
+
+export function DrawerTitle({
+  children,
+  className,
+}: {
+  children: ReactNode
+  className?: string
+}) {
+  return (
+    <h2
+      className={cn(
+        'text-sm font-mono uppercase tracking-wider text-foreground-bright',
+        className
+      )}
+    >
       {children}
     </h2>
   )
 }
 
-export function DrawerDescription({ children, className }: { children: ReactNode; className?: string }) {
-  return <p className={cn('text-xs text-foreground-dim', className)}>{children}</p>
+export function DrawerDescription({
+  children,
+  className,
+}: {
+  children: ReactNode
+  className?: string
+}) {
+  return (
+    <p className={cn('text-xs text-foreground-dim', className)}>{children}</p>
+  )
 }

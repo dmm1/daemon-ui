@@ -10,12 +10,17 @@ export function composeRefs<T>(...refs: Array<React.Ref<T> | undefined>) {
   }
 }
 
-export function useCallbackRef<T extends (...args: never[]) => unknown>(callback: T | undefined): T {
+export function useCallbackRef<T extends (...args: never[]) => unknown>(
+  callback: T | undefined
+): T {
   const callbackRef = useRef(callback)
   useEffect(() => {
     callbackRef.current = callback
   })
-  return useCallback((...args: Parameters<T>) => callbackRef.current?.(...args), []) as T
+  return useCallback(
+    (...args: Parameters<T>) => callbackRef.current?.(...args),
+    []
+  ) as T
 }
 
 export function getFocusableElements(container: HTMLElement): HTMLElement[] {
@@ -27,7 +32,9 @@ export function getFocusableElements(container: HTMLElement): HTMLElement[] {
     'textarea:not([disabled])',
     '[tabindex]:not([tabindex="-1"])',
   ]
-  return Array.from(container.querySelectorAll<HTMLElement>(selectors.join(',')))
+  return Array.from(
+    container.querySelectorAll<HTMLElement>(selectors.join(','))
+  )
 }
 
 export const Keys = {

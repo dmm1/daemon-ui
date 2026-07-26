@@ -48,7 +48,12 @@ function DialogDemo() {
     <>
       <Button onClick={() => setOpen(true)}>OPEN COMMAND PALETTE</Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <Command onSelect={(v) => { alert(`Selected: ${v}`); setOpen(false) }}>
+        <Command
+          onSelect={(v) => {
+            alert(`Selected: ${v}`)
+            setOpen(false)
+          }}
+        >
           <CommandInput placeholder="Search commands..." />
           <CommandList>
             <CommandEmpty>Nothing found.</CommandEmpty>

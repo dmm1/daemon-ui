@@ -34,7 +34,11 @@ interface DialogProps {
   onOpenChange?: (open: boolean) => void
 }
 
-export function Dialog({ children, open: controlledOpen, onOpenChange }: DialogProps) {
+export function Dialog({
+  children,
+  open: controlledOpen,
+  onOpenChange,
+}: DialogProps) {
   const [uncontrolledOpen, setUncontrolledOpen] = useState(false)
   const open = controlledOpen ?? uncontrolledOpen
   const setOpen = useCallback(
@@ -58,7 +62,11 @@ interface DialogTriggerProps {
   asChild?: boolean
 }
 
-export function DialogTrigger({ children, className, asChild }: DialogTriggerProps) {
+export function DialogTrigger({
+  children,
+  className,
+  asChild,
+}: DialogTriggerProps) {
   const { setOpen } = useDialogContext()
 
   if (asChild && isValidElement(children)) {
@@ -155,29 +163,73 @@ export function DialogClose({ className }: { className?: string }) {
       )}
       aria-label="Close"
     >
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 14 14"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      >
         <path d="M1 1l12 12M13 1L1 13" />
       </svg>
     </button>
   )
 }
 
-export function DialogHeader({ children, className }: { children: ReactNode; className?: string }) {
-  return <div className={cn('flex flex-col gap-1.5', className)}>{children}</div>
-}
-
-export function DialogFooter({ children, className }: { children: ReactNode; className?: string }) {
-  return <div className={cn('flex justify-end gap-2 mt-4', className)}>{children}</div>
-}
-
-export function DialogTitle({ children, className }: { children: ReactNode; className?: string }) {
+export function DialogHeader({
+  children,
+  className,
+}: {
+  children: ReactNode
+  className?: string
+}) {
   return (
-    <h2 className={cn('text-sm font-mono uppercase tracking-wider text-foreground-bright', className)}>
+    <div className={cn('flex flex-col gap-1.5', className)}>{children}</div>
+  )
+}
+
+export function DialogFooter({
+  children,
+  className,
+}: {
+  children: ReactNode
+  className?: string
+}) {
+  return (
+    <div className={cn('flex justify-end gap-2 mt-4', className)}>
+      {children}
+    </div>
+  )
+}
+
+export function DialogTitle({
+  children,
+  className,
+}: {
+  children: ReactNode
+  className?: string
+}) {
+  return (
+    <h2
+      className={cn(
+        'text-sm font-mono uppercase tracking-wider text-foreground-bright',
+        className
+      )}
+    >
       {children}
     </h2>
   )
 }
 
-export function DialogDescription({ children, className }: { children: ReactNode; className?: string }) {
-  return <p className={cn('text-xs text-foreground-dim', className)}>{children}</p>
+export function DialogDescription({
+  children,
+  className,
+}: {
+  children: ReactNode
+  className?: string
+}) {
+  return (
+    <p className={cn('text-xs text-foreground-dim', className)}>{children}</p>
+  )
 }

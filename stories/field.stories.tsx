@@ -13,7 +13,10 @@ export const Default: Story = {
   args: { label: 'Symbol', children: null },
   render: (args) => (
     <Field {...args}>
-      <input className="h-10 w-full bg-background border border-border px-3 text-sm font-mono text-foreground" placeholder="BTC/USD" />
+      <input
+        className="h-10 w-full bg-background border border-border px-3 text-sm font-mono text-foreground"
+        placeholder="BTC/USD"
+      />
     </Field>
   ),
 }
@@ -29,7 +32,10 @@ export const WithError: Story = {
 export const WithDescription: Story = {
   render: () => (
     <Field label="API Key" description="Your Alpaca API key">
-      <input className="h-10 w-full bg-background border border-border px-3 text-sm font-mono text-foreground" placeholder="pk_..." />
+      <input
+        className="h-10 w-full bg-background border border-border px-3 text-sm font-mono text-foreground"
+        placeholder="pk_..."
+      />
     </Field>
   ),
 }

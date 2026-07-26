@@ -88,8 +88,12 @@ export const Bottom: Story = {
         </SheetHeader>
         <div className="flex gap-2 py-4">
           <Button size="sm">BUY</Button>
-          <Button size="sm" variant="destructive">SELL</Button>
-          <Button size="sm" variant="outline">CLOSE ALL</Button>
+          <Button size="sm" variant="destructive">
+            SELL
+          </Button>
+          <Button size="sm" variant="outline">
+            CLOSE ALL
+          </Button>
         </div>
       </SheetContent>
     </Sheet>

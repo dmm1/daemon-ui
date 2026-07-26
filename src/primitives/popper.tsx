@@ -1,4 +1,10 @@
-import { useState, useLayoutEffect, useCallback, type ReactNode, type RefObject } from 'react'
+import {
+  useState,
+  useLayoutEffect,
+  useCallback,
+  type ReactNode,
+  type RefObject,
+} from 'react'
 import { Portal } from './portal'
 
 export type Placement = 'top' | 'bottom' | 'left' | 'right'
@@ -46,8 +52,10 @@ function calculateCoords(
 
 function calculateTransform(placement: Placement, align: Align): string {
   const alongAxis = align === 'start' ? '0' : align === 'end' ? '-100%' : '-50%'
-  const horizontal = placement === 'left' ? '-100%' : placement === 'right' ? '0' : alongAxis
-  const vertical = placement === 'top' ? '-100%' : placement === 'bottom' ? '0' : alongAxis
+  const horizontal =
+    placement === 'left' ? '-100%' : placement === 'right' ? '0' : alongAxis
+  const vertical =
+    placement === 'top' ? '-100%' : placement === 'bottom' ? '0' : alongAxis
   return `translate(${horizontal}, ${vertical})`
 }
 
@@ -104,7 +112,12 @@ export function Popper({
   offset = 8,
   open,
 }: PopperProps) {
-  const { coords, transform } = usePopperPosition(referenceRef, { placement, align, offset, open })
+  const { coords, transform } = usePopperPosition(referenceRef, {
+    placement,
+    align,
+    offset,
+    open,
+  })
 
   if (!open) return null
 

@@ -35,9 +35,15 @@ export const Outline: Story = {
   args: { type: 'single', value: 'b' },
   render: (args) => (
     <ToggleGroup {...args}>
-      <ToggleGroupItem value="a" variant="outline">X</ToggleGroupItem>
-      <ToggleGroupItem value="b" variant="outline">Y</ToggleGroupItem>
-      <ToggleGroupItem value="c" variant="outline">Z</ToggleGroupItem>
+      <ToggleGroupItem value="a" variant="outline">
+        X
+      </ToggleGroupItem>
+      <ToggleGroupItem value="b" variant="outline">
+        Y
+      </ToggleGroupItem>
+      <ToggleGroupItem value="c" variant="outline">
+        Z
+      </ToggleGroupItem>
     </ToggleGroup>
   ),
 }

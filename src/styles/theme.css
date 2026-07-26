@@ -51,7 +51,7 @@
 }
 
 /* Light mode overrides */
-[data-theme="light"] {
+[data-theme='light'] {
   --color-background: #ffffff;
   --color-background-panel: #f8f9fa;
   --color-background-elevated: #ffffff;

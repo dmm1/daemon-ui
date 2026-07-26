@@ -5,11 +5,7 @@ import dts from 'vite-plugin-dts'
 import { resolve } from 'path'
 
 export default defineConfig({
-  plugins: [
-    react(),
-    tailwindcss(),
-    dts({ include: ['src'] }),
-  ],
+  plugins: [react(), tailwindcss(), dts({ include: ['src'] })],
   build: {
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
@@ -17,7 +13,13 @@ export default defineConfig({
       fileName: 'index',
     },
     rollupOptions: {
-      external: ['react', 'react-dom', 'react/jsx-runtime', 'motion', 'motion/react'],
+      external: [
+        'react',
+        'react-dom',
+        'react/jsx-runtime',
+        'motion',
+        'motion/react',
+      ],
       output: {
         preserveModules: true,
         preserveModulesRoot: 'src',

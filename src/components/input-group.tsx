@@ -12,14 +12,14 @@ const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(
           'flex items-center border border-border bg-background rounded-sm transition-all',
           'focus-within:border-primary focus-within:ring-1 focus-within:ring-ring',
           '[&>input]:border-0 [&>input]:ring-0 [&>input]:focus-visible:ring-0 [&>input]:focus-visible:border-0',
-          className,
+          className
         )}
         {...props}
       >
         {children}
       </div>
     )
-  },
+  }
 )
 
 InputGroup.displayName = 'InputGroup'
@@ -35,15 +35,17 @@ const InputAddon = forwardRef<HTMLDivElement, InputAddonProps>(
         ref={ref}
         className={cn(
           'flex items-center px-3 text-foreground-dim text-sm font-mono bg-muted self-stretch',
-          position === 'left' ? 'border-r border-border' : 'border-l border-border',
-          className,
+          position === 'left'
+            ? 'border-r border-border'
+            : 'border-l border-border',
+          className
         )}
         {...props}
       >
         {children}
       </div>
     )
-  },
+  }
 )
 
 InputAddon.displayName = 'InputAddon'

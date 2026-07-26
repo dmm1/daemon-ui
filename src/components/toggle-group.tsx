@@ -1,4 +1,10 @@
-import { createContext, forwardRef, useCallback, useContext, type HTMLAttributes } from 'react'
+import {
+  createContext,
+  forwardRef,
+  useCallback,
+  useContext,
+  type HTMLAttributes,
+} from 'react'
 import { cn } from '../lib/cn'
 import { Toggle, type ToggleProps } from './toggle'
 
@@ -36,11 +42,13 @@ const ToggleGroup = forwardRef<HTMLDivElement, ToggleGroupProps>(
           onValueChange?.(newValue)
         }
       },
-      [type, normalizedValue, onValueChange],
+      [type, normalizedValue, onValueChange]
     )
 
     return (
-      <ToggleGroupContext.Provider value={{ type, value: normalizedValue, onItemToggle }}>
+      <ToggleGroupContext.Provider
+        value={{ type, value: normalizedValue, onItemToggle }}
+      >
         <div
           ref={ref}
           role="group"
@@ -51,12 +59,15 @@ const ToggleGroup = forwardRef<HTMLDivElement, ToggleGroupProps>(
         </div>
       </ToggleGroupContext.Provider>
     )
-  },
+  }
 )
 
 ToggleGroup.displayName = 'ToggleGroup'
 
-export interface ToggleGroupItemProps extends Omit<ToggleProps, 'pressed' | 'onPressedChange'> {
+export interface ToggleGroupItemProps extends Omit<
+  ToggleProps,
+  'pressed' | 'onPressedChange'
+> {
   value: string
 }
 
@@ -77,7 +88,7 @@ const ToggleGroupItem = forwardRef<HTMLButtonElement, ToggleGroupItemProps>(
         {...props}
       />
     )
-  },
+  }
 )
 
 ToggleGroupItem.displayName = 'ToggleGroupItem'

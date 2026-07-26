@@ -1,5 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { H1, H2, H3, H4, H5, H6, P, Lead, Code, InlineCode, BlockQuote } from '../src/components/typography'
+import {
+  H1,
+  H2,
+  H3,
+  H4,
+  H5,
+  H6,
+  P,
+  Lead,
+  Code,
+  InlineCode,
+  BlockQuote,
+} from '../src/components/typography'
 
 const meta: Meta = {
   title: 'Components/Typography',
@@ -26,17 +38,30 @@ export const Heading6: StoryObj = {
   render: () => <H6>Heading 6</H6>,
 }
 export const Paragraph: StoryObj = {
-  render: () => <P>Market analysis indicates a bullish trend with volume confirmation across major pairs.</P>,
+  render: () => (
+    <P>
+      Market analysis indicates a bullish trend with volume confirmation across
+      major pairs.
+    </P>
+  ),
 }
 export const LeadText: StoryObj = {
-  render: () => <Lead>Autonomous trading powered by deep learning signals.</Lead>,
+  render: () => (
+    <Lead>Autonomous trading powered by deep learning signals.</Lead>
+  ),
 }
 export const CodeBlock: StoryObj = {
   render: () => <Code>{'const signal = await analyze(pair)'}</Code>,
 }
 export const InlineCodeExample: StoryObj = {
-  render: () => <P>Use the <InlineCode>kill-switch</InlineCode> to halt all trades.</P>,
+  render: () => (
+    <P>
+      Use the <InlineCode>kill-switch</InlineCode> to halt all trades.
+    </P>
+  ),
 }
 export const Quote: StoryObj = {
-  render: () => <BlockQuote>The trend is your friend until it bends at the end.</BlockQuote>,
+  render: () => (
+    <BlockQuote>The trend is your friend until it bends at the end.</BlockQuote>
+  ),
 }

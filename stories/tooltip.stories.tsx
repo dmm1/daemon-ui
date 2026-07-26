@@ -57,16 +57,24 @@ export const Placements: Story = {
   render: () => (
     <div className="flex items-center justify-center gap-4 p-20">
       <Tooltip content="Top" placement="top">
-        <Button variant="outline" size="sm">TOP</Button>
+        <Button variant="outline" size="sm">
+          TOP
+        </Button>
       </Tooltip>
       <Tooltip content="Right" placement="right">
-        <Button variant="outline" size="sm">RIGHT</Button>
+        <Button variant="outline" size="sm">
+          RIGHT
+        </Button>
       </Tooltip>
       <Tooltip content="Bottom" placement="bottom">
-        <Button variant="outline" size="sm">BOTTOM</Button>
+        <Button variant="outline" size="sm">
+          BOTTOM
+        </Button>
       </Tooltip>
       <Tooltip content="Left" placement="left">
-        <Button variant="outline" size="sm">LEFT</Button>
+        <Button variant="outline" size="sm">
+          LEFT
+        </Button>
       </Tooltip>
     </div>
   ),

@@ -58,7 +58,11 @@ export function TooltipPortal({
   children,
   className,
 }: TooltipPortalProps) {
-  const { coords, transform } = usePopperPosition(triggerRef, { placement, offset, open })
+  const { coords, transform } = usePopperPosition(triggerRef, {
+    placement,
+    offset,
+    open,
+  })
 
   return createPortal(
     <AnimatePresence>
@@ -94,7 +98,11 @@ interface TooltipContentProps {
   items?: Array<{ label: string; value: string }>
 }
 
-export function TooltipContent({ title, description, items }: TooltipContentProps) {
+export function TooltipContent({
+  title,
+  description,
+  items,
+}: TooltipContentProps) {
   return (
     <div className="flex flex-col gap-1">
       {title && (
@@ -103,7 +111,10 @@ export function TooltipContent({ title, description, items }: TooltipContentProp
         </span>
       )}
       {items?.map((item) => (
-        <div key={item.label} className="flex justify-between gap-4 text-[10px]">
+        <div
+          key={item.label}
+          className="flex justify-between gap-4 text-[10px]"
+        >
           <span className="text-foreground-dim">{item.label}</span>
           <span className="text-foreground">{item.value}</span>
         </div>

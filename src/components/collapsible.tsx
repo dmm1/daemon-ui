@@ -33,7 +33,17 @@ interface CollapsibleProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const Collapsible = forwardRef<HTMLDivElement, CollapsibleProps>(
-  ({ open: controlledOpen, defaultOpen = false, onOpenChange, className, children, ...props }, ref) => {
+  (
+    {
+      open: controlledOpen,
+      defaultOpen = false,
+      onOpenChange,
+      className,
+      children,
+      ...props
+    },
+    ref
+  ) => {
     const [internalOpen, setInternalOpen] = useState(defaultOpen)
     const open = controlledOpen !== undefined ? controlledOpen : internalOpen
 
@@ -54,24 +64,25 @@ const Collapsible = forwardRef<HTMLDivElement, CollapsibleProps>(
 )
 Collapsible.displayName = 'Collapsible'
 
-const CollapsibleTrigger = forwardRef<HTMLButtonElement, ButtonHTMLAttributes<HTMLButtonElement>>(
-  ({ className, children, ...props }, ref) => {
-    const { open, toggle } = useCollapsible()
-    return (
-      <button
-        ref={ref}
-        type="button"
-        onClick={toggle}
-        aria-expanded={open}
-        aria-controls="collapsible-content"
-        className={className}
-        {...props}
-      >
-        {children}
-      </button>
-    )
-  }
-)
+const CollapsibleTrigger = forwardRef<
+  HTMLButtonElement,
+  ButtonHTMLAttributes<HTMLButtonElement>
+>(({ className, children, ...props }, ref) => {
+  const { open, toggle } = useCollapsible()
+  return (
+    <button
+      ref={ref}
+      type="button"
+      onClick={toggle}
+      aria-expanded={open}
+      aria-controls="collapsible-content"
+      className={className}
+      {...props}
+    >
+      {children}
+    </button>
+  )
+})
 CollapsibleTrigger.displayName = 'CollapsibleTrigger'
 
 interface CollapsibleContentProps extends HTMLAttributes<HTMLDivElement> {
@@ -101,7 +112,12 @@ const CollapsibleContent = forwardRef<HTMLDivElement, CollapsibleContentProps>(
             className="overflow-hidden"
           >
             <div ref={contentRef}>
-              <div ref={ref} id="collapsible-content" className={cn('text-xs', className)} {...props}>
+              <div
+                ref={ref}
+                id="collapsible-content"
+                className={cn('text-xs', className)}
+                {...props}
+              >
                 {children}
               </div>
             </div>

@@ -15,7 +15,11 @@ interface CalendarProps {
 const DAYS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
 
 function isSameDay(a: Date, b: Date) {
-  return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate()
+  return (
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate()
+  )
 }
 
 function Calendar({
@@ -28,7 +32,9 @@ function Calendar({
   disabledDates = [],
   className,
 }: CalendarProps) {
-  const [internalMonth, setInternalMonth] = useState(() => selected ?? new Date())
+  const [internalMonth, setInternalMonth] = useState(
+    () => selected ?? new Date()
+  )
   const month = controlledMonth ?? internalMonth
   const today = useMemo(() => new Date(), [])
 
@@ -42,7 +48,10 @@ function Calendar({
 
   const year = month.getFullYear()
   const mo = month.getMonth()
-  const monthName = month.toLocaleString('default', { month: 'long', year: 'numeric' })
+  const monthName = month.toLocaleString('default', {
+    month: 'long',
+    year: 'numeric',
+  })
 
   const days = useMemo(() => {
     const firstDay = new Date(year, mo, 1).getDay()
@@ -75,7 +84,9 @@ function Calendar({
         >
           ←
         </button>
-        <span className="text-[10px] uppercase tracking-[0.15em] text-foreground-dim">{monthName}</span>
+        <span className="text-[10px] uppercase tracking-[0.15em] text-foreground-dim">
+          {monthName}
+        </span>
         <button
           type="button"
           onClick={nextMonth}
@@ -86,7 +97,10 @@ function Calendar({
       </div>
       <div className="grid grid-cols-7 gap-0">
         {DAYS.map((d) => (
-          <div key={d} className="h-8 w-8 flex items-center justify-center text-[10px] uppercase tracking-wider text-foreground-dim">
+          <div
+            key={d}
+            className="h-8 w-8 flex items-center justify-center text-[10px] uppercase tracking-wider text-foreground-dim"
+          >
             {d}
           </div>
         ))}
@@ -106,7 +120,7 @@ function Calendar({
                 'hover:bg-primary/5',
                 disabled && 'opacity-30 cursor-not-allowed',
                 isSelected && 'bg-primary text-background',
-                isToday && !isSelected && 'border border-primary',
+                isToday && !isSelected && 'border border-primary'
               )}
             >
               {d.getDate()}

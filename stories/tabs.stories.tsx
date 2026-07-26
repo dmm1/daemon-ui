@@ -1,5 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '../src/components/tabs'
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+} from '../src/components/tabs'
 
 const meta: Meta = {
   title: 'Navigation/Tabs',
@@ -15,7 +20,9 @@ export const Default: Story = {
         <TabsTrigger value="overview">Overview</TabsTrigger>
         <TabsTrigger value="analytics">Analytics</TabsTrigger>
         <TabsTrigger value="reports">Reports</TabsTrigger>
-        <TabsTrigger value="notifications" disabled>Notifications</TabsTrigger>
+        <TabsTrigger value="notifications" disabled>
+          Notifications
+        </TabsTrigger>
       </TabsList>
       <TabsContent value="overview">
         <div className="text-xs font-mono text-foreground p-4 border border-border">

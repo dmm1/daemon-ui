@@ -1,7 +1,15 @@
-import { forwardRef, useCallback, useRef, type InputHTMLAttributes } from 'react'
+import {
+  forwardRef,
+  useCallback,
+  useRef,
+  type InputHTMLAttributes,
+} from 'react'
 import { cn } from '../lib/cn'
 
-export interface SwitchProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'onChange' | 'size'> {
+export interface SwitchProps extends Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  'type' | 'onChange' | 'size'
+> {
   checked?: boolean
   defaultChecked?: boolean
   onCheckedChange?: (checked: boolean) => void
@@ -9,7 +17,18 @@ export interface SwitchProps extends Omit<InputHTMLAttributes<HTMLInputElement>,
 }
 
 const Switch = forwardRef<HTMLInputElement, SwitchProps>(
-  ({ className, checked, defaultChecked, onCheckedChange, disabled, size = 'md', ...props }, ref) => {
+  (
+    {
+      className,
+      checked,
+      defaultChecked,
+      onCheckedChange,
+      disabled,
+      size = 'md',
+      ...props
+    },
+    ref
+  ) => {
     const innerRef = useRef<HTMLInputElement>(null)
     const inputRef = (ref as React.RefObject<HTMLInputElement>) || innerRef
 
@@ -22,7 +41,7 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>(
       (e: React.ChangeEvent<HTMLInputElement>) => {
         onCheckedChange?.(e.target.checked)
       },
-      [onCheckedChange],
+      [onCheckedChange]
     )
 
     const isChecked = checked ?? false
@@ -34,7 +53,7 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>(
           size === 'md' ? 'h-5 w-10' : 'h-4 w-8',
           isChecked ? 'bg-primary border-primary' : 'bg-muted',
           disabled && 'opacity-50 pointer-events-none cursor-default',
-          className,
+          className
         )}
         onClick={handleClick}
         role="switch"
@@ -59,12 +78,12 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>(
               ? size === 'md'
                 ? 'translate-x-[22px]'
                 : 'translate-x-[18px]'
-              : 'translate-x-[3px]',
+              : 'translate-x-[3px]'
           )}
         />
       </div>
     )
-  },
+  }
 )
 
 Switch.displayName = 'Switch'

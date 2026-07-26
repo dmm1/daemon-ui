@@ -48,14 +48,20 @@ export function toast(opts: Omit<ToastProps, 'id'> & { id?: string }) {
   return id
 }
 
-toast.success = (title: string, opts?: Partial<Omit<ToastProps, 'id' | 'title' | 'variant'>>) =>
-  toast({ title, variant: 'success', ...opts })
+toast.success = (
+  title: string,
+  opts?: Partial<Omit<ToastProps, 'id' | 'title' | 'variant'>>
+) => toast({ title, variant: 'success', ...opts })
 
-toast.error = (title: string, opts?: Partial<Omit<ToastProps, 'id' | 'title' | 'variant'>>) =>
-  toast({ title, variant: 'error', ...opts })
+toast.error = (
+  title: string,
+  opts?: Partial<Omit<ToastProps, 'id' | 'title' | 'variant'>>
+) => toast({ title, variant: 'error', ...opts })
 
-toast.warning = (title: string, opts?: Partial<Omit<ToastProps, 'id' | 'title' | 'variant'>>) =>
-  toast({ title, variant: 'warning', ...opts })
+toast.warning = (
+  title: string,
+  opts?: Partial<Omit<ToastProps, 'id' | 'title' | 'variant'>>
+) => toast({ title, variant: 'warning', ...opts })
 
 toast.dismiss = (id: string) => {
   toasts = toasts.filter((t) => t.id !== id)
@@ -108,7 +114,14 @@ function ToastItem({ t }: { t: ToastProps }) {
         className="absolute right-2 top-2 text-foreground-dim hover:text-foreground transition-all"
         aria-label="Close"
       >
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 12 12"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+        >
           <path d="M1 1l10 10M11 1L1 11" />
         </svg>
       </button>

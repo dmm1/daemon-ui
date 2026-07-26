@@ -26,7 +26,10 @@ const DropdownMenuContext = createContext<DropdownMenuContextValue | null>(null)
 
 function useDropdownMenu() {
   const ctx = useContext(DropdownMenuContext)
-  if (!ctx) throw new Error('DropdownMenu compound components must be used within <DropdownMenu>')
+  if (!ctx)
+    throw new Error(
+      'DropdownMenu compound components must be used within <DropdownMenu>'
+    )
   return ctx
 }
 
@@ -36,7 +39,11 @@ interface DropdownMenuProps {
   onOpenChange?: (open: boolean) => void
 }
 
-function DropdownMenu({ children, open: controlledOpen, onOpenChange }: DropdownMenuProps) {
+function DropdownMenu({
+  children,
+  open: controlledOpen,
+  onOpenChange,
+}: DropdownMenuProps) {
   const [uncontrolledOpen, setUncontrolledOpen] = useState(false)
   const triggerRef = useRef<HTMLButtonElement>(null)
 
@@ -65,9 +72,13 @@ const DropdownMenuTrigger = forwardRef<
   return (
     <button
       ref={(node) => {
-        (triggerRef as React.MutableRefObject<HTMLButtonElement | null>).current = node
+        ;(
+          triggerRef as React.MutableRefObject<HTMLButtonElement | null>
+        ).current = node
         if (typeof ref === 'function') ref(node)
-        else if (ref) (ref as React.MutableRefObject<HTMLButtonElement | null>).current = node
+        else if (ref)
+          (ref as React.MutableRefObject<HTMLButtonElement | null>).current =
+            node
       }}
       type="button"
       aria-expanded={open}
@@ -90,98 +101,112 @@ interface DropdownMenuContentProps {
   children?: ReactNode
 }
 
-const DropdownMenuContent = forwardRef<HTMLDivElement, DropdownMenuContentProps>(
-  ({ className, align = 'start', sideOffset = 4, children }, ref) => {
-    const { open, setOpen, triggerRef } = useDropdownMenu()
-    const contentRef = useRef<HTMLDivElement>(null)
-    const activeIndex = useRef(-1)
+const DropdownMenuContent = forwardRef<
+  HTMLDivElement,
+  DropdownMenuContentProps
+>(({ className, align = 'start', sideOffset = 4, children }, ref) => {
+  const { open, setOpen, triggerRef } = useDropdownMenu()
+  const contentRef = useRef<HTMLDivElement>(null)
+  const activeIndex = useRef(-1)
 
-    const { coords, transform } = usePopperPosition(triggerRef, {
-      placement: 'bottom',
-      align,
-      offset: sideOffset,
-      open,
-    })
+  const { coords, transform } = usePopperPosition(triggerRef, {
+    placement: 'bottom',
+    align,
+    offset: sideOffset,
+    open,
+  })
 
-    useDismissableLayer(contentRef, {
-      enabled: open,
-      onDismiss: () => setOpen(false),
-      onEscape: () => triggerRef.current?.focus(),
-      ignoreRef: triggerRef,
-    })
+  useDismissableLayer(contentRef, {
+    enabled: open,
+    onDismiss: () => setOpen(false),
+    onEscape: () => triggerRef.current?.focus(),
+    ignoreRef: triggerRef,
+  })
 
-    useEffect(() => {
-      if (!open) return
+  useEffect(() => {
+    if (!open) return
 
-      function handleKeyDown(e: KeyboardEvent) {
-        const items = contentRef.current?.querySelectorAll<HTMLElement>('[role="menuitem"]:not([data-disabled])')
-        if (!items?.length) return
+    function handleKeyDown(e: KeyboardEvent) {
+      const items = contentRef.current?.querySelectorAll<HTMLElement>(
+        '[role="menuitem"]:not([data-disabled])'
+      )
+      if (!items?.length) return
 
-        if (e.key === Keys.ArrowDown) {
-          e.preventDefault()
-          activeIndex.current = Math.min(activeIndex.current + 1, items.length - 1)
-          items[activeIndex.current]?.focus()
-        } else if (e.key === Keys.ArrowUp) {
-          e.preventDefault()
-          activeIndex.current = Math.max(activeIndex.current - 1, 0)
-          items[activeIndex.current]?.focus()
-        } else if (e.key === Keys.Home) {
-          e.preventDefault()
-          activeIndex.current = 0
-          items[0]?.focus()
-        } else if (e.key === Keys.End) {
-          e.preventDefault()
-          activeIndex.current = items.length - 1
-          items[items.length - 1]?.focus()
-        }
+      if (e.key === Keys.ArrowDown) {
+        e.preventDefault()
+        activeIndex.current = Math.min(
+          activeIndex.current + 1,
+          items.length - 1
+        )
+        items[activeIndex.current]?.focus()
+      } else if (e.key === Keys.ArrowUp) {
+        e.preventDefault()
+        activeIndex.current = Math.max(activeIndex.current - 1, 0)
+        items[activeIndex.current]?.focus()
+      } else if (e.key === Keys.Home) {
+        e.preventDefault()
+        activeIndex.current = 0
+        items[0]?.focus()
+      } else if (e.key === Keys.End) {
+        e.preventDefault()
+        activeIndex.current = items.length - 1
+        items[items.length - 1]?.focus()
       }
+    }
 
-      document.addEventListener('keydown', handleKeyDown)
-      return () => document.removeEventListener('keydown', handleKeyDown)
-    }, [open])
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [open])
 
-    useEffect(() => {
-      if (open) activeIndex.current = -1
-    }, [open])
+  useEffect(() => {
+    if (open) activeIndex.current = -1
+  }, [open])
 
-    const transformOrigin =
-      align === 'end' ? 'top right' : align === 'center' ? 'top center' : 'top left'
+  const transformOrigin =
+    align === 'end'
+      ? 'top right'
+      : align === 'center'
+        ? 'top center'
+        : 'top left'
 
-    return createPortal(
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            ref={(node) => {
-              (contentRef as React.MutableRefObject<HTMLDivElement | null>).current = node
-              if (typeof ref === 'function') ref(node)
-              else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node
-            }}
-            role="menu"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.15 }}
-            style={{
-              position: 'absolute',
-              top: coords.top,
-              left: coords.left,
-              transform,
-              transformOrigin,
-              zIndex: 50,
-            }}
-            className={cn(
-              'bg-background-panel border border-border py-1 min-w-[180px] shadow-lg',
-              className
-            )}
-          >
-            {children}
-          </motion.div>
-        )}
-      </AnimatePresence>,
-      document.body
-    )
-  }
-)
+  return createPortal(
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          ref={(node) => {
+            ;(
+              contentRef as React.MutableRefObject<HTMLDivElement | null>
+            ).current = node
+            if (typeof ref === 'function') ref(node)
+            else if (ref)
+              (ref as React.MutableRefObject<HTMLDivElement | null>).current =
+                node
+          }}
+          role="menu"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.95 }}
+          transition={{ duration: 0.15 }}
+          style={{
+            position: 'absolute',
+            top: coords.top,
+            left: coords.left,
+            transform,
+            transformOrigin,
+            zIndex: 50,
+          }}
+          className={cn(
+            'bg-background-panel border border-border py-1 min-w-[180px] shadow-lg',
+            className
+          )}
+        >
+          {children}
+        </motion.div>
+      )}
+    </AnimatePresence>,
+    document.body
+  )
+})
 DropdownMenuContent.displayName = 'DropdownMenuContent'
 
 interface DropdownMenuItemProps extends HTMLAttributes<HTMLDivElement> {
@@ -231,35 +256,38 @@ const DropdownMenuItem = forwardRef<HTMLDivElement, DropdownMenuItemProps>(
 )
 DropdownMenuItem.displayName = 'DropdownMenuItem'
 
-const DropdownMenuSeparator = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      role="separator"
-      className={cn('h-px bg-border mx-2 my-1', className)}
-      {...props}
-    />
-  )
-)
+const DropdownMenuSeparator = forwardRef<
+  HTMLDivElement,
+  HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    role="separator"
+    className={cn('h-px bg-border mx-2 my-1', className)}
+    {...props}
+  />
+))
 DropdownMenuSeparator.displayName = 'DropdownMenuSeparator'
 
-const DropdownMenuLabel = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn(
-        'px-3 py-1.5 text-[10px] uppercase tracking-[0.15em] text-foreground-dim font-mono',
-        className
-      )}
-      {...props}
-    />
-  )
-)
+const DropdownMenuLabel = forwardRef<
+  HTMLDivElement,
+  HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(
+      'px-3 py-1.5 text-[10px] uppercase tracking-[0.15em] text-foreground-dim font-mono',
+      className
+    )}
+    {...props}
+  />
+))
 DropdownMenuLabel.displayName = 'DropdownMenuLabel'
 
-const DropdownMenuGroup = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  ({ ...props }, ref) => <div ref={ref} role="group" {...props} />
-)
+const DropdownMenuGroup = forwardRef<
+  HTMLDivElement,
+  HTMLAttributes<HTMLDivElement>
+>(({ ...props }, ref) => <div ref={ref} role="group" {...props} />)
 DropdownMenuGroup.displayName = 'DropdownMenuGroup'
 
 export {

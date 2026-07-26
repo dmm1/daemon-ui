@@ -23,7 +23,8 @@ const PopoverContext = createContext<PopoverContextValue | null>(null)
 
 function usePopoverContext() {
   const ctx = useContext(PopoverContext)
-  if (!ctx) throw new Error('Popover compound components must be used within <Popover>')
+  if (!ctx)
+    throw new Error('Popover compound components must be used within <Popover>')
   return ctx
 }
 
@@ -33,7 +34,11 @@ interface PopoverProps {
   onOpenChange?: (open: boolean) => void
 }
 
-export function Popover({ children, open: controlledOpen, onOpenChange }: PopoverProps) {
+export function Popover({
+  children,
+  open: controlledOpen,
+  onOpenChange,
+}: PopoverProps) {
   const [uncontrolledOpen, setUncontrolledOpen] = useState(false)
   const open = controlledOpen ?? uncontrolledOpen
   const setOpen = useCallback(
@@ -89,7 +94,11 @@ export function PopoverContent({
 }: PopoverContentProps) {
   const { open, setOpen, triggerRef } = usePopoverContext()
   const contentRef = useRef<HTMLDivElement>(null)
-  const { coords, transform } = usePopperPosition(triggerRef, { placement, offset, open })
+  const { coords, transform } = usePopperPosition(triggerRef, {
+    placement,
+    offset,
+    open,
+  })
 
   useDismissableLayer(contentRef, {
     enabled: open,

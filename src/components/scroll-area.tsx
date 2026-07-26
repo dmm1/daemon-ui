@@ -15,11 +15,7 @@ const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
           : 'overflow-y-auto overflow-x-hidden'
 
     return (
-      <div
-        ref={ref}
-        className={cn('relative', className)}
-        {...props}
-      >
+      <div ref={ref} className={cn('relative', className)} {...props}>
         <div
           className={cn(
             'h-full w-full',

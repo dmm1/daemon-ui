@@ -37,7 +37,9 @@ function Combobox({
   const selectedLabel = options.find((o) => o.value === value)?.label ?? ''
 
   const filtered = search
-    ? options.filter((o) => o.label.toLowerCase().includes(search.toLowerCase()))
+    ? options.filter((o) =>
+        o.label.toLowerCase().includes(search.toLowerCase())
+      )
     : options
 
   const handleOpen = useCallback(() => {
@@ -100,8 +102,20 @@ function Combobox({
         <span className={cn('truncate', !value && 'text-foreground-dim')}>
           {selectedLabel || placeholder}
         </span>
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="shrink-0 ml-2">
-          <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 12 12"
+          fill="none"
+          className="shrink-0 ml-2"
+        >
+          <path
+            d="M3 4.5L6 7.5L9 4.5"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
       </button>
       {open &&
@@ -117,14 +131,19 @@ function Combobox({
                 ref={inputRef}
                 type="text"
                 value={search}
-                onChange={(e) => { setSearch(e.target.value); setActiveIndex(0) }}
+                onChange={(e) => {
+                  setSearch(e.target.value)
+                  setActiveIndex(0)
+                }}
                 placeholder={searchPlaceholder}
                 className="w-full bg-transparent text-xs font-mono outline-none text-foreground placeholder:text-foreground-dim"
               />
             </div>
             <div role="listbox" className="max-h-48 overflow-y-auto py-1">
               {filtered.length === 0 ? (
-                <div className="px-3 py-2 text-xs font-mono text-foreground-dim">No results</div>
+                <div className="px-3 py-2 text-xs font-mono text-foreground-dim">
+                  No results
+                </div>
               ) : (
                 filtered.map((opt, i) => (
                   <div

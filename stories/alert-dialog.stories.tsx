@@ -30,13 +30,15 @@ export const Default: Story = {
         <AlertDialogHeader>
           <AlertDialogTitle>Activate Kill Switch</AlertDialogTitle>
           <AlertDialogDescription>
-            This will immediately halt all trading activity and close all open positions.
-            This action cannot be undone.
+            This will immediately halt all trading activity and close all open
+            positions. This action cannot be undone.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>CANCEL</AlertDialogCancel>
-          <AlertDialogAction onClick={() => console.log('Kill switch activated')}>
+          <AlertDialogAction
+            onClick={() => console.log('Kill switch activated')}
+          >
             CONFIRM
           </AlertDialogAction>
         </AlertDialogFooter>

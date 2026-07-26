@@ -28,7 +28,8 @@ const MenubarContext = createContext<MenubarContextValue | null>(null)
 
 function useMenubar() {
   const ctx = useContext(MenubarContext)
-  if (!ctx) throw new Error('Menubar compound components must be used within <Menubar>')
+  if (!ctx)
+    throw new Error('Menubar compound components must be used within <Menubar>')
   return ctx
 }
 
@@ -42,7 +43,10 @@ const MenubarMenuContext = createContext<MenubarMenuContextValue | null>(null)
 
 function useMenubarMenu() {
   const ctx = useContext(MenubarMenuContext)
-  if (!ctx) throw new Error('MenubarMenu compound components must be used within <MenubarMenu>')
+  if (!ctx)
+    throw new Error(
+      'MenubarMenu compound components must be used within <MenubarMenu>'
+    )
   return ctx
 }
 
@@ -65,7 +69,15 @@ const Menubar = forwardRef<HTMLDivElement, MenubarProps>(
     }, [])
 
     return (
-      <MenubarContext.Provider value={{ activeMenu, setActiveMenu, registerMenu, unregisterMenu, menuIds }}>
+      <MenubarContext.Provider
+        value={{
+          activeMenu,
+          setActiveMenu,
+          registerMenu,
+          unregisterMenu,
+          menuIds,
+        }}
+      >
         <div
           ref={ref}
           role="menubar"
@@ -108,59 +120,64 @@ function MenubarMenu({ children, id }: MenubarMenuProps) {
   )
 }
 
-const MenubarTrigger = forwardRef<HTMLButtonElement, HTMLAttributes<HTMLButtonElement>>(
-  ({ className, onClick, onKeyDown, ...props }, ref) => {
-    const { activeMenu, setActiveMenu, menuIds } = useMenubar()
-    const { id, open, triggerRef } = useMenubarMenu()
+const MenubarTrigger = forwardRef<
+  HTMLButtonElement,
+  HTMLAttributes<HTMLButtonElement>
+>(({ className, onClick, onKeyDown, ...props }, ref) => {
+  const { activeMenu, setActiveMenu, menuIds } = useMenubar()
+  const { id, open, triggerRef } = useMenubarMenu()
 
-    return (
-      <button
-        ref={(node) => {
-          (triggerRef as React.MutableRefObject<HTMLButtonElement | null>).current = node
-          if (typeof ref === 'function') ref(node)
-          else if (ref) (ref as React.MutableRefObject<HTMLButtonElement | null>).current = node
-        }}
-        type="button"
-        role="menuitem"
-        aria-expanded={open}
-        aria-haspopup="menu"
-        data-state={open ? 'open' : 'closed'}
-        className={cn(
-          'px-3 py-1.5 text-xs font-mono uppercase tracking-wider text-foreground outline-none',
-          'hover:text-primary hover:bg-primary/5',
-          'focus-visible:ring-2 focus-visible:ring-ring',
-          open && 'text-primary bg-primary/5',
-          className
-        )}
-        onClick={(e) => {
-          setActiveMenu(open ? null : id)
-          onClick?.(e)
-        }}
-        onKeyDown={(e) => {
-          if (e.key === Keys.ArrowRight || e.key === Keys.ArrowLeft) {
-            e.preventDefault()
-            const currentIdx = menuIds.indexOf(id)
-            const nextIdx =
-              e.key === Keys.ArrowRight
-                ? (currentIdx + 1) % menuIds.length
-                : (currentIdx - 1 + menuIds.length) % menuIds.length
+  return (
+    <button
+      ref={(node) => {
+        ;(
+          triggerRef as React.MutableRefObject<HTMLButtonElement | null>
+        ).current = node
+        if (typeof ref === 'function') ref(node)
+        else if (ref)
+          (ref as React.MutableRefObject<HTMLButtonElement | null>).current =
+            node
+      }}
+      type="button"
+      role="menuitem"
+      aria-expanded={open}
+      aria-haspopup="menu"
+      data-state={open ? 'open' : 'closed'}
+      className={cn(
+        'px-3 py-1.5 text-xs font-mono uppercase tracking-wider text-foreground outline-none',
+        'hover:text-primary hover:bg-primary/5',
+        'focus-visible:ring-2 focus-visible:ring-ring',
+        open && 'text-primary bg-primary/5',
+        className
+      )}
+      onClick={(e) => {
+        setActiveMenu(open ? null : id)
+        onClick?.(e)
+      }}
+      onKeyDown={(e) => {
+        if (e.key === Keys.ArrowRight || e.key === Keys.ArrowLeft) {
+          e.preventDefault()
+          const currentIdx = menuIds.indexOf(id)
+          const nextIdx =
+            e.key === Keys.ArrowRight
+              ? (currentIdx + 1) % menuIds.length
+              : (currentIdx - 1 + menuIds.length) % menuIds.length
 
-            if (activeMenu) setActiveMenu(menuIds[nextIdx])
-            const triggers = triggerRef.current
-              ?.closest('[role="menubar"]')
-              ?.querySelectorAll<HTMLElement>('[role="menuitem"]')
-            triggers?.[nextIdx]?.focus()
-          }
-          onKeyDown?.(e)
-        }}
-        onMouseEnter={() => {
-          if (activeMenu && activeMenu !== id) setActiveMenu(id)
-        }}
-        {...props}
-      />
-    )
-  }
-)
+          if (activeMenu) setActiveMenu(menuIds[nextIdx])
+          const triggers = triggerRef.current
+            ?.closest('[role="menubar"]')
+            ?.querySelectorAll<HTMLElement>('[role="menuitem"]')
+          triggers?.[nextIdx]?.focus()
+        }
+        onKeyDown?.(e)
+      }}
+      onMouseEnter={() => {
+        if (activeMenu && activeMenu !== id) setActiveMenu(id)
+      }}
+      {...props}
+    />
+  )
+})
 MenubarTrigger.displayName = 'MenubarTrigger'
 
 interface MenubarContentProps {
@@ -193,12 +210,17 @@ const MenubarContent = forwardRef<HTMLDivElement, MenubarContentProps>(
       if (!open) return
 
       function handleKeyDown(e: KeyboardEvent) {
-        const items = contentRef.current?.querySelectorAll<HTMLElement>('[role="menuitem"]:not([data-disabled])')
+        const items = contentRef.current?.querySelectorAll<HTMLElement>(
+          '[role="menuitem"]:not([data-disabled])'
+        )
         if (!items?.length) return
 
         if (e.key === Keys.ArrowDown) {
           e.preventDefault()
-          activeIndex.current = Math.min(activeIndex.current + 1, items.length - 1)
+          activeIndex.current = Math.min(
+            activeIndex.current + 1,
+            items.length - 1
+          )
           items[activeIndex.current]?.focus()
         } else if (e.key === Keys.ArrowUp) {
           e.preventDefault()
@@ -220,9 +242,13 @@ const MenubarContent = forwardRef<HTMLDivElement, MenubarContentProps>(
         {open && (
           <motion.div
             ref={(node) => {
-              (contentRef as React.MutableRefObject<HTMLDivElement | null>).current = node
+              ;(
+                contentRef as React.MutableRefObject<HTMLDivElement | null>
+              ).current = node
               if (typeof ref === 'function') ref(node)
-              else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node
+              else if (ref)
+                (ref as React.MutableRefObject<HTMLDivElement | null>).current =
+                  node
             }}
             role="menu"
             initial={{ opacity: 0, scale: 0.95 }}
@@ -299,16 +325,17 @@ const MenubarItem = forwardRef<HTMLDivElement, MenubarItemProps>(
 )
 MenubarItem.displayName = 'MenubarItem'
 
-const MenubarSeparator = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      role="separator"
-      className={cn('h-px bg-border mx-2 my-1', className)}
-      {...props}
-    />
-  )
-)
+const MenubarSeparator = forwardRef<
+  HTMLDivElement,
+  HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    role="separator"
+    className={cn('h-px bg-border mx-2 my-1', className)}
+    {...props}
+  />
+))
 MenubarSeparator.displayName = 'MenubarSeparator'
 
 export {

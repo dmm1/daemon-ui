@@ -20,7 +20,8 @@ const TabsContext = createContext<TabsContextValue | null>(null)
 
 function useTabs() {
   const ctx = useContext(TabsContext)
-  if (!ctx) throw new Error('Tabs compound components must be used within <Tabs>')
+  if (!ctx)
+    throw new Error('Tabs compound components must be used within <Tabs>')
   return ctx
 }
 
@@ -31,7 +32,17 @@ interface TabsProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const Tabs = forwardRef<HTMLDivElement, TabsProps>(
-  ({ className, value: controlledValue, defaultValue = '', onValueChange, children, ...props }, ref) => {
+  (
+    {
+      className,
+      value: controlledValue,
+      defaultValue = '',
+      onValueChange,
+      children,
+      ...props
+    },
+    ref
+  ) => {
     const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue)
     const value = controlledValue ?? uncontrolledValue
 
@@ -59,7 +70,10 @@ const TabsList = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
     <div
       ref={ref}
       role="tablist"
-      className={cn('inline-flex items-center gap-1 border-b border-border', className)}
+      className={cn(
+        'inline-flex items-center gap-1 border-b border-border',
+        className
+      )}
       {...props}
     />
   )
@@ -80,9 +94,13 @@ const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
     return (
       <button
         ref={(node) => {
-          (triggerRef as React.MutableRefObject<HTMLButtonElement | null>).current = node
+          ;(
+            triggerRef as React.MutableRefObject<HTMLButtonElement | null>
+          ).current = node
           if (typeof ref === 'function') ref(node)
-          else if (ref) (ref as React.MutableRefObject<HTMLButtonElement | null>).current = node
+          else if (ref)
+            (ref as React.MutableRefObject<HTMLButtonElement | null>).current =
+              node
         }}
         type="button"
         role="tab"
@@ -108,7 +126,9 @@ const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
           if (e.key === Keys.ArrowLeft || e.key === Keys.ArrowRight) {
             e.preventDefault()
             const tablist = triggerRef.current?.closest('[role="tablist"]')
-            const tabs = tablist?.querySelectorAll<HTMLButtonElement>('[role="tab"]:not([disabled])')
+            const tabs = tablist?.querySelectorAll<HTMLButtonElement>(
+              '[role="tab"]:not([disabled])'
+            )
             if (!tabs?.length) return
 
             const currentIdx = Array.from(tabs).indexOf(triggerRef.current!)
@@ -119,7 +139,9 @@ const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
 
             const nextTab = tabs[nextIdx]
             nextTab?.focus()
-            const nextValue = nextTab?.getAttribute('aria-controls')?.replace('tabpanel-', '')
+            const nextValue = nextTab
+              ?.getAttribute('aria-controls')
+              ?.replace('tabpanel-', '')
             if (nextValue) onValueChange(nextValue)
           }
           onKeyDown?.(e)

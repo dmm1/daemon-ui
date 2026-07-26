@@ -1,7 +1,15 @@
-import { forwardRef, useCallback, useMemo, type InputHTMLAttributes } from 'react'
+import {
+  forwardRef,
+  useCallback,
+  useMemo,
+  type InputHTMLAttributes,
+} from 'react'
 import { cn } from '../lib/cn'
 
-export interface SliderProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'onChange' | 'size'> {
+export interface SliderProps extends Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  'type' | 'onChange' | 'size'
+> {
   value?: number
   defaultValue?: number
   min?: number
@@ -11,12 +19,25 @@ export interface SliderProps extends Omit<InputHTMLAttributes<HTMLInputElement>,
 }
 
 const Slider = forwardRef<HTMLInputElement, SliderProps>(
-  ({ className, value, defaultValue, min = 0, max = 100, step = 1, onValueChange, disabled, ...props }, ref) => {
+  (
+    {
+      className,
+      value,
+      defaultValue,
+      min = 0,
+      max = 100,
+      step = 1,
+      onValueChange,
+      disabled,
+      ...props
+    },
+    ref
+  ) => {
     const handleChange = useCallback(
       (e: React.ChangeEvent<HTMLInputElement>) => {
         onValueChange?.(Number(e.target.value))
       },
-      [onValueChange],
+      [onValueChange]
     )
 
     const percentage = useMemo(() => {
@@ -29,7 +50,7 @@ const Slider = forwardRef<HTMLInputElement, SliderProps>(
         className={cn(
           'relative flex w-full touch-none select-none items-center',
           disabled && 'opacity-50 pointer-events-none',
-          className,
+          className
         )}
       >
         <div className="relative h-1 w-full rounded-full bg-muted overflow-hidden">
@@ -50,7 +71,7 @@ const Slider = forwardRef<HTMLInputElement, SliderProps>(
           disabled={disabled}
           className={cn(
             'absolute inset-0 h-full w-full cursor-pointer opacity-0',
-            '[&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-primary [&::-webkit-slider-thumb]:bg-background [&::-webkit-slider-thumb]:shadow-sm',
+            '[&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-primary [&::-webkit-slider-thumb]:bg-background [&::-webkit-slider-thumb]:shadow-sm'
           )}
           {...props}
         />
@@ -60,7 +81,7 @@ const Slider = forwardRef<HTMLInputElement, SliderProps>(
         />
       </div>
     )
-  },
+  }
 )
 
 Slider.displayName = 'Slider'

@@ -30,6 +30,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "lint": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "clean": "rm -rf dist"
   },
   "keywords": [
@@ -89,6 +91,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwindcss": "^4.0.0",
-    "@storybook/addon-docs": "^10.5.4"
+    "@storybook/addon-docs": "^10.5.4",
+    "prettier": "^3.4.2"
   }
 }

@@ -30,7 +30,11 @@ export const WithConstraints: Story = {
   render: () => {
     const [selected, setSelected] = useState<Date | undefined>()
     const today = new Date()
-    const maxDate = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate())
+    const maxDate = new Date(
+      today.getFullYear(),
+      today.getMonth() + 1,
+      today.getDate()
+    )
     return (
       <div className="w-64 border border-border bg-background-panel">
         <Calendar
