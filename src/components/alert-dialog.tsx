@@ -80,6 +80,11 @@ export function AlertDialogContent({
   className,
 }: AlertDialogContentProps) {
   const { open, setOpen } = useAlertDialogContext()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   useEffect(() => {
     if (!open) return
@@ -89,6 +94,8 @@ export function AlertDialogContent({
       document.body.style.overflow = prev
     }
   }, [open])
+
+  if (!mounted) return null
 
   return createPortal(
     <AnimatePresence>
